@@ -33,7 +33,7 @@ private:
 
 public:
     explicit Histogram(QWidget *parent = nullptr);
-    void createHistogram(const QImage& img);
+    void createHistogram(const QImage& img, const QSize& size);
 
 signals:
 

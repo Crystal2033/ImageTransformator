@@ -51,12 +51,14 @@ void GraphMenuWidget::createGradationTransBlock()
     gradTransformLabel->setWordWrap(true);
 
     contrastBtn = new QPushButton("Contrast Transform (add description)");
+    negativeBtn = new QPushButton("Negative Transform");
     logarithmBtn = new QPushButton("Logarithm Transform (add description)");
     gammaCorrectionBtn = new QPushButton("Gamma Correction (add description)");
     cuttingBtn = new QPushButton("Area Cutting (add description)");
 
     vertGradTransfItems->addWidget(gradTransformLabel);
     vertGradTransfItems->addWidget(contrastBtn);
+    vertGradTransfItems->addWidget(negativeBtn);
     vertGradTransfItems->addWidget(logarithmBtn);
     vertGradTransfItems->addWidget(gammaCorrectionBtn);
     vertGradTransfItems->addWidget(cuttingBtn);

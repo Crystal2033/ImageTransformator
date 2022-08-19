@@ -38,10 +38,12 @@ private:
     QVBoxLayout* vertWindowTransfItems = nullptr;
     QLabel* windowTransformLabel = nullptr;
     QPushButton* averageBtn = nullptr;
+    QPushButton* negativeBtn = nullptr;
     QPushButton* gaussBtn = nullptr;
     QPushButton* medianBtn = nullptr;
     QPushButton* laplassianBtn = nullptr;
     QPushButton* gradientBtn = nullptr;
+
 
     //Fourier transform
     QVBoxLayout* vertFourierTransfItems = nullptr;

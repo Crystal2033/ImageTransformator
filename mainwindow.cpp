@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QFileDialog>
 #include "histogram.h"
+#include "exceptions.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    loadImage();
+    //loadImage();
     makeInnerWidgets();
 }
 
@@ -77,29 +78,32 @@ void MainWindow::makeInnerWidgets()
     globalHorLayout = new QHBoxLayout();
     globalHorLayout->setSpacing(50);
     vertStartLayout = new QVBoxLayout();
-    vertResultLayout = new QVBoxLayout();
+    startImageWgt = new ImageWidget(this);
+    histStartImg = new Histogram(this);
 
     vertMenuLayout =  new QVBoxLayout();
+
+    vertResultLayout = new QVBoxLayout();
+    resultImageWgt = new ImageWidget(this);
+    histResultImg = new Histogram(this);
 
     this->centralWidget()->setLayout(globalHorLayout);
     move(0, 0);
 
-
-    Histogram* hist_start_img = new Histogram;
-    Histogram* hist_result_img = new Histogram;
-
-    QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
-
-    addImageOnLayout(*brightnessImage, vertStartLayout, startImageWgt);
+    //QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
+    vertStartLayout->addWidget(startImageWgt);
+    //addImageOnLayout(image, vertStartLayout, startImageWgt);
     addLoadImageBtn(vertStartLayout);
-    addHistOnLayout(*hist_start_img, vertStartLayout, *brightnessImage);
+    vertStartLayout->addWidget(histStartImg);
+    //addHistOnLayout(*hist_start_img, vertStartLayout, *brightnessImage);
 
     makeGraphicsMenu();
 
-    addImageOnLayout(image, vertResultLayout, resultImageWgt);
+    //addImageOnLayout(image, vertResultLayout, resultImageWgt);
+    vertResultLayout->addWidget(resultImageWgt);
     addSaveAndSwapBtns(vertResultLayout);
-    addHistOnLayout(*hist_result_img, vertResultLayout, image);
-
+    //addHistOnLayout(*histResultImg, vertResultLayout, image);
+    vertResultLayout->addWidget(histResultImg);
 
 
     globalHorLayout->addLayout(vertStartLayout);
@@ -117,19 +121,14 @@ void MainWindow::addImageOnLayout(QImage &img, QVBoxLayout *&layout, ImageWidget
 
     imageWgt->setImage(img, QSize(width(), height()));
     layout->addWidget(imageWgt);
+
 }
 
 void MainWindow::addLoadImageBtn(QVBoxLayout *&parentLayout)
 {
     loadImageBtn = new QPushButton("Load image");
     parentLayout->addWidget(loadImageBtn);
-
-}
-
-void MainWindow::addHistOnLayout(Histogram &hist, QVBoxLayout *&layout, const QImage &img)
-{
-    hist.createHistogram(img);
-    layout->addWidget(&hist);
+    connect(loadImageBtn, SIGNAL(clicked()), this, SLOT(onLoadImageBtnClick()));
 }
 
 void MainWindow::makeGraphicsMenu()
@@ -138,6 +137,20 @@ void MainWindow::makeGraphicsMenu()
     graphMenuWidget->createMenu(vertMenuLayout);
 
 }
+
+void MainWindow::setImageAndCreateHist(ImageWidget *&imageWidget, Histogram *&hist, const QImage& image)
+{
+
+    QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
+    imageWidget->setImage(*brightnessImage, brightnessImage->size());
+    hist->createHistogram(imageWidget->getImage(), imageWidget->size());
+}
+
+//void MainWindow::setImageOnWidget(const QImage &img, ImageWidget *&imageWidget)
+//{
+//    imageWidget->setImage(img, img.size());
+//    addHistOnLayout(*hist_start_img, vertStartLayout, *brightnessImage);
+//}
 
 void MainWindow::onSaveImageBtnClick()
 {
@@ -157,7 +170,13 @@ void MainWindow::onSaveImageBtnClick()
     {
       // QSize startPictureSize =resultImageWgt->getPictureSize();
       // resultImageWgt->getImage().scaled(startPictureSize.width(), startPictureSize.height(), Qt::KeepAspectRatio).save(fileName);
-        resultImageWgt->getImage().save(fileName);
+        try{
+            resultImageWgt->getImage().save(fileName);
+        }
+        catch (ImageExistanceError& err) {
+            Q_UNUSED(err);
+            return;
+        }
     }
 }
 
@@ -167,7 +186,50 @@ void MainWindow::onSwapImagesBtnClick()
         QMessageBox::critical(this, "Image widget is empty", "Something goes wrong with your image widget");
         return;
     }
-    image = resultImageWgt->getImage();
-    startImageWgt->setImage(image, image.size());
+    try{
+        image = resultImageWgt->getImage();
+    }
+    catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+        return;
+    }
+
+    setImageAndCreateHist(startImageWgt, histStartImg, image);
+}
+
+void MainWindow::onLoadImageBtnClick()
+{
+    QFileDialog::Options options;
+    QString selectedFilter;
+    QString fileName = "";
+    if(!resultImageWgt){
+        QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
+        return;
+    }
+
+
+    fileName = QFileDialog::getOpenFileName(this, "Export Plot", ".", "PNG Files (*.png, *.jpg);;All Files (*)",
+                                        &selectedFilter,
+                                        options);
+    if (!fileName.isEmpty())
+    {
+      // QSize startPictureSize =resultImageWgt->getPictureSize();
+      // resultImageWgt->getImage().scaled(startPictureSize.width(), startPictureSize.height(), Qt::KeepAspectRatio).save(fileName);
+        if (!image.load(fileName))
+        {
+            QString err_msg = QString("Can not download an image<br>Searching by path: %1").arg(fileName);
+            qDebug() << err_msg.split("<br>");
+            QMessageBox::critical(this
+                                  , "Error"
+                                  , err_msg);
+            exit(-1);
+        }
+        image = image
+                .scaled(width(), height(), Qt::KeepAspectRatio)
+                .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+
+        setImageAndCreateHist(startImageWgt, histStartImg, image);
+
+    }
 }
 

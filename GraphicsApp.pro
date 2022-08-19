@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    exceptions.cpp \
     graphmenuwidget.cpp \
     histogram.cpp \
     imagefunctions.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    exceptions.h \
     graphmenuwidget.h \
     histogram.h \
     imagefunctions.h \

@@ -7,6 +7,7 @@
  ***************************************************************************/
 #include "imagewidget.h"
 #include "imagefunctions.h"
+#include "exceptions.h"
 #include <QMessageBox>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent)
@@ -48,11 +49,10 @@ void ImageWidget::setImage(const QImage& img, const QSize& size)
 QImage &ImageWidget::getImage()
 {
     if(img_ptr){
-        qDebug() << "all is ok" << Qt::endl;
         return *img_ptr;
     }
-    qDebug() << "all not is ok" << Qt::endl;
     QMessageBox::critical(nullptr, "Image existance error", "You don`t have a result image to save it.");
+    throw ImageExistanceError("There is no image in widget");
 
 }
 

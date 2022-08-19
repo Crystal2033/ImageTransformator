@@ -36,6 +36,8 @@ private:
     //Images
     QImage image;
     ImageWidget *startImageWgt = nullptr;
+    Histogram* histStartImg = nullptr;
+    Histogram* histResultImg = nullptr;
     ImageWidget *resultImageWgt = nullptr;
 
     //Layouts
@@ -62,12 +64,13 @@ private:
     bool makeAndSaveImage();
     void addImageOnLayout(QImage& img, QVBoxLayout *&layout, ImageWidget*& imageWgt);
     void addLoadImageBtn(QVBoxLayout *& parentLayout);
-    void addHistOnLayout(Histogram& hist, QVBoxLayout *& layout, const QImage& img);
     void makeGraphicsMenu();
+    void setImageAndCreateHist(ImageWidget*& imageWidget, Histogram *& hist, const QImage& image);
 
 private slots:
     void onSaveImageBtnClick();
     void onSwapImagesBtnClick();
+    void onLoadImageBtnClick();
 
 };
 #endif // MAINWINDOW_H
