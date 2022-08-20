@@ -43,7 +43,6 @@ void ImageWidget::setImage(const QImage& img, const QSize& size)
 
     img_ptr = new QImage(img.scaled(size.width(), size.height(), Qt::KeepAspectRatio).copy());
     this->setFixedSize(img_ptr->width(), img_ptr->height());
-    repaint();
 }
 
 QImage &ImageWidget::getImage()

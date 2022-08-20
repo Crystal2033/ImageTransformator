@@ -23,8 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    //loadImage();
+    singlePixelTransformator = new SinglePixelTransforms();
     makeInnerWidgets();
 }
 
@@ -33,29 +32,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::loadImage()
-{
-    /* Загрузка изображения, с которым будет вся работа.
-     *  Должно вызываться до всех остальных функций.
-    */
-
-    // нужно корректно склеить путь до файла, чтобы слеши были правильные
-    QDir dir;
-    // Сейчас путь dir == QApplication::applicationDirPath()
-    QString path = dir.absoluteFilePath("Cat.jpg");
-
-    if (!image.load(path))
-    {
-        QString err_msg = QString("Не смог загрузить картинку<br>Искал по пути: %1").arg(path);
-        qDebug() << err_msg.split("<br>");
-        QMessageBox::critical(this
-                              , "Ошибка"
-                              , err_msg);
-        exit(-1);
-    }
-    image = image
-            .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-}
 
 void MainWindow::addSaveAndSwapBtns(QVBoxLayout*& parentLayout)
 {
@@ -90,21 +66,16 @@ void MainWindow::makeInnerWidgets()
     this->centralWidget()->setLayout(globalHorLayout);
     move(0, 0);
 
-    //QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
     vertStartLayout->addWidget(startImageWgt);
-    //addImageOnLayout(image, vertStartLayout, startImageWgt);
     addLoadImageBtn(vertStartLayout);
     vertStartLayout->addWidget(histStartImg);
-    //addHistOnLayout(*hist_start_img, vertStartLayout, *brightnessImage);
 
     makeGraphicsMenu();
 
-    //addImageOnLayout(image, vertResultLayout, resultImageWgt);
     vertResultLayout->addWidget(resultImageWgt);
     addSaveAndSwapBtns(vertResultLayout);
-    //addHistOnLayout(*histResultImg, vertResultLayout, image);
-    vertResultLayout->addWidget(histResultImg);
 
+    vertResultLayout->addWidget(histResultImg);
 
     globalHorLayout->addLayout(vertStartLayout);
     globalHorLayout->addLayout(vertMenuLayout);
@@ -133,7 +104,7 @@ void MainWindow::addLoadImageBtn(QVBoxLayout *&parentLayout)
 
 void MainWindow::makeGraphicsMenu()
 {
-    graphMenuWidget = new GraphMenuWidget();
+    graphMenuWidget = new GraphMenuWidget(this);
     graphMenuWidget->createMenu(vertMenuLayout);
 
 }
@@ -141,16 +112,12 @@ void MainWindow::makeGraphicsMenu()
 void MainWindow::setImageAndCreateHist(ImageWidget *&imageWidget, Histogram *&hist, const QImage& image)
 {
 
-    QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
-    imageWidget->setImage(*brightnessImage, brightnessImage->size());
+    //QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
+    imageWidget->setImage(image, image.size());
     hist->createHistogram(imageWidget->getImage(), imageWidget->size());
+    imageWidget->repaint();
+    hist->repaint();
 }
-
-//void MainWindow::setImageOnWidget(const QImage &img, ImageWidget *&imageWidget)
-//{
-//    imageWidget->setImage(img, img.size());
-//    addHistOnLayout(*hist_start_img, vertStartLayout, *brightnessImage);
-//}
 
 void MainWindow::onSaveImageBtnClick()
 {
@@ -182,20 +149,24 @@ void MainWindow::onSaveImageBtnClick()
 
 void MainWindow::onSwapImagesBtnClick()
 {
+    QImage* startImage;
     if(!resultImageWgt){
         QMessageBox::critical(this, "Image widget is empty", "Something goes wrong with your image widget");
         return;
     }
     try{
-        image = resultImageWgt->getImage();
+        startImage = &startImageWgt->getImage();
+        //delete startImage;
+        startImage = &resultImageWgt->getImage();
     }
     catch (ImageExistanceError& err) {
         Q_UNUSED(err);
         return;
     }
 
-    setImageAndCreateHist(startImageWgt, histStartImg, image);
+    setImageAndCreateHist(startImageWgt, histStartImg, *startImage);
 }
+
 
 void MainWindow::onLoadImageBtnClick()
 {
@@ -225,11 +196,21 @@ void MainWindow::onLoadImageBtnClick()
             exit(-1);
         }
         image = image
-                .scaled(width(), height(), Qt::KeepAspectRatio)
+                .scaled(800, 600, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
 
         setImageAndCreateHist(startImageWgt, histStartImg, image);
 
     }
 }
+
+void MainWindow::onNegativeBtnClick()
+{
+    try {
+        singlePixelTransformator->negativeTransformation(startImageWgt->getImage(), resultImageWgt, histResultImg);
+    }  catch (ImageExistanceError& err) {
+
+    }
+}
+
 

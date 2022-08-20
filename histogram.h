@@ -28,12 +28,13 @@ private:
 
     void paintEvent(QPaintEvent *event);
     void paintHistogram();
-
+    void clearHistogram();
     void drawAxis();
 
 public:
     explicit Histogram(QWidget *parent = nullptr);
     void createHistogram(const QImage& img, const QSize& size);
+    ~Histogram() = default;
 
 signals:
 

@@ -6,6 +6,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "histogram.h"
+#include <QPaintEvent>
 
 void Histogram::paintEvent(QPaintEvent *event)
 {
@@ -17,6 +18,7 @@ void Histogram::paintEvent(QPaintEvent *event)
 
 void Histogram::paintHistogram()
 {
+
     picture = QPicture();
     painter.begin(&picture);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -25,9 +27,17 @@ void Histogram::paintHistogram()
     painter.setPen(histPen);
 
     for(int i = 0; i < BRIGHTNESS_MAX; ++i){
-        painter.drawLine(i * histPen.width(), height(), i * histPen.width(), height() - ( (double)histogram[i]/maxHeight * height()) );
+        if(histogram[i] != 0){
+            painter.drawLine(i * histPen.width(), height(), i * histPen.width(), height() - ( (double)histogram[i]/maxHeight * height()) );
+        }
     }
     painter.end();
+}
+
+void Histogram::clearHistogram()
+{
+    memset(histogram, 0, sizeof(histogram));
+    maxHeight = 0;
 }
 
 void Histogram::drawAxis()
@@ -45,23 +55,19 @@ Histogram::Histogram(QWidget *parent) : QWidget(parent)
     histPen.setColor(Qt::darkCyan);
     histPen.setWidth(2);
     borderPen.setColor(Qt::black);
-    borderPen.setWidth(4);
+    borderPen.setWidth(6);
     axisWidthShift = borderPen.width();
-
-    maxHeight = 0;
-    memset(histogram, 0, sizeof(histogram));
-
+    clearHistogram();
 }
 
 void Histogram::createHistogram(const QImage &img, const QSize& size)
 {
     setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)size.height() / 3 + vertShift);
-
+    clearHistogram();
     const uchar* px = img.bits();
     valueOfPixels = img.height() * img.width();
     //int r, g, b;
     int brightness;
-
     for(unsigned int i = 0; i < valueOfPixels; i++){
         //ImageFunctions::getRGB(const_cast<uchar*&>(px), r, g, b);
         //brightness = ImageFunctions::getBrightness(r, g, b);
@@ -76,3 +82,4 @@ void Histogram::createHistogram(const QImage &img, const QSize& size)
     }
     paintHistogram();
 }
+

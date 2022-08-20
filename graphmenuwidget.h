@@ -19,7 +19,7 @@ class GraphMenuWidget : public QWidget
 {
     Q_OBJECT
 public:
-    GraphMenuWidget();
+    explicit GraphMenuWidget(QWidget *parent = nullptr);
     void createMenu(QBoxLayout* parentLayout);
 
 private:
@@ -58,8 +58,10 @@ private:
 
     //PRIVATE functions
     void createGradationTransBlock();
+    void makeGradationalConnection();
     void createWindowTransBlock();
     void createFourierTransBlock();
+
 
 };
 

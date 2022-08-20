@@ -6,9 +6,10 @@
  *                                                                         *
  ***************************************************************************/
 #include "graphmenuwidget.h"
+#include "mainwindow.h"
 #include <QDebug>
 
-GraphMenuWidget::GraphMenuWidget()
+GraphMenuWidget::GraphMenuWidget(QWidget *parent) : QWidget(parent)
 {
 
 }
@@ -55,6 +56,7 @@ void GraphMenuWidget::createGradationTransBlock()
     logarithmBtn = new QPushButton("Logarithm Transform (add description)");
     gammaCorrectionBtn = new QPushButton("Gamma Correction (add description)");
     cuttingBtn = new QPushButton("Area Cutting (add description)");
+    makeGradationalConnection();
 
     vertGradTransfItems->addWidget(gradTransformLabel);
     vertGradTransfItems->addWidget(contrastBtn);
@@ -64,6 +66,11 @@ void GraphMenuWidget::createGradationTransBlock()
     vertGradTransfItems->addWidget(cuttingBtn);
 
     vertMenuItems->addLayout(vertGradTransfItems);
+}
+
+void GraphMenuWidget::makeGradationalConnection()
+{
+    connect(negativeBtn, SIGNAL(clicked()), parent(), SLOT(onNegativeBtnClick()));
 }
 
 void GraphMenuWidget::createWindowTransBlock()
