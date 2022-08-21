@@ -52,7 +52,7 @@ QImage *&ImageWidget::getImage()
     if(img_ptr){
         return img_ptr;
     }
-    QMessageBox::critical(nullptr, "Image existance error", "You don`t have a result image to save it.");
+    QMessageBox::critical(nullptr, "Image existance error", "You don`t have image.");
     throw ImageExistanceError("There is no image in widget");
 
 }
@@ -91,15 +91,10 @@ void ImageWidget::notify()
 
 ImageWidget::~ImageWidget()
 {
-    for(auto obs : observers){
-        removeObserver(obs);
-    }
+//    for(auto obs : observers){
+//        removeObserver(obs);
+//    }
     delete painter;
 }
 
-
-//QImage& ImageWidget::drawRect(const QImage& img)
-//{
-//    return ImageFunctions::fillRect(img);
-//}
 

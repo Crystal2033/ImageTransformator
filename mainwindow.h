@@ -58,7 +58,7 @@ private:
     GraphMenuWidget* graphMenuWidget = nullptr;
 
     //Transformators
-    SinglePixelTransforms* singlePixelTransformator;
+    Transformations* transformStrategy = nullptr;
 
 
     //Functions

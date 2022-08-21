@@ -23,8 +23,16 @@ class SinglePixelTransforms : public Transformations
 {
 public:
     SinglePixelTransforms() = default;
-    void transform(const QImage &image, ImageWidget *& imgWidget) const override ;
-    ~SinglePixelTransforms() = default;
+    virtual void transform(const QImage &image, ImageWidget *& imgWidget) const override = 0 ;
+    virtual ~SinglePixelTransforms() = default;
+};
+
+class NegativeTransform : public SinglePixelTransforms
+{
+public:
+    NegativeTransform() = default;
+    ~NegativeTransform() = default;
+     void transform(const QImage &image, ImageWidget *& imgWidget) const override ;
 };
 
 #endif // TRANSFORMATIONS_H

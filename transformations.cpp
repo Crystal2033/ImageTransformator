@@ -7,8 +7,7 @@
  ***************************************************************************/
 #include "transformations.h"
 
-
-void SinglePixelTransforms::transform(const QImage &image, ImageWidget *& imgWidget) const
+void NegativeTransform::transform(const QImage &image, ImageWidget *&imgWidget) const
 {
     QImage* transformedImage = new QImage(image);
     uchar* px = transformedImage->bits();
@@ -20,5 +19,4 @@ void SinglePixelTransforms::transform(const QImage &image, ImageWidget *& imgWid
         px++;
     }
     imgWidget->setImage(*transformedImage, transformedImage->size());
-
 }

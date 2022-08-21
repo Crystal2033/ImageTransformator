@@ -15,6 +15,7 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QFileDialog>
+#include <QScreen>
 #include "histogram.h"
 #include "exceptions.h"
 
@@ -23,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    singlePixelTransformator = new SinglePixelTransforms();
     makeInnerWidgets();
 }
 
@@ -185,10 +185,18 @@ void MainWindow::onLoadImageBtnClick()
                                   , err_msg);
             exit(-1);
         }
+        qDebug() << image.size();
+        QScreen *screen = QGuiApplication::primaryScreen();
+        QRect  screenGeometry = screen->geometry();
+        int height = screenGeometry.height();
+        int width = screenGeometry.width();
+        qDebug() << height << Qt::endl;
+        qDebug() << width << Qt::endl;
         image = image
-                .scaled(800, 600, Qt::KeepAspectRatio)
+                .scaled(width / 3, height / 2, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
 
+        qDebug() << "After resize" << image.size()<< Qt::endl;
         setImageOnWidget(startImageWgt, image);
 
     }
@@ -196,8 +204,13 @@ void MainWindow::onLoadImageBtnClick()
 
 void MainWindow::onNegativeBtnClick()
 {
+    if(transformStrategy){
+        delete transformStrategy;
+    }
+
+    transformStrategy = new NegativeTransform();
     try {
-        singlePixelTransformator->transform(*startImageWgt->getImage(), resultImageWgt);
+        transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt);
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
