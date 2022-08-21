@@ -39,7 +39,6 @@ void MainWindow::addSaveAndSwapBtns(QVBoxLayout*& parentLayout)
     horBtnsResultLayout->setSizeConstraint(QLayout::SetMinimumSize);
     saveImageBtn = new QPushButton("Save image");
     swapImagesBtn = new QPushButton("Set to start image");
-
     horBtnsResultLayout->addWidget(saveImageBtn);
     horBtnsResultLayout->addWidget(swapImagesBtn);
 
@@ -196,7 +195,6 @@ void MainWindow::onLoadImageBtnClick()
                 .scaled(screenGeometry.width() / 3, screenGeometry.height() / 2, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
 
-        qDebug() << "After resize" << image.size()<< Qt::endl;
         setImageOnWidget(startImageWgt, image);
 
     }
@@ -210,10 +208,18 @@ void MainWindow::onNegativeBtnClick()
 
     transformStrategy = new NegativeTransform();
     try {
-        transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt);
+        transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt); // add options class DATATransforms
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
+}
+
+void MainWindow::onContrastBtnClick()
+{
+    if(!contrastTool){
+        contrastTool = new ContrastTool(this);
+    }
+    contrastTool->exec();
 }
 
 

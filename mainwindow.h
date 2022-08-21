@@ -19,6 +19,8 @@
 #include "transformations.h"
 #include "graphmenuwidget.h"
 #include "imagewidget.h"
+#include "contrasttool.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -59,7 +61,7 @@ private:
 
     //Transformators
     Transformations* transformStrategy = nullptr;
-
+    ContrastTool* contrastTool = nullptr;
 
     //Functions
     void addSaveAndSwapBtns(QVBoxLayout*& parentLayout);
@@ -75,8 +77,10 @@ private slots:
     void onSaveImageBtnClick();
     void onSwapImagesBtnClick();
     void onLoadImageBtnClick();
+
 public slots:
     void onNegativeBtnClick();
+    void onContrastBtnClick();
 
 };
 #endif // MAINWINDOW_H

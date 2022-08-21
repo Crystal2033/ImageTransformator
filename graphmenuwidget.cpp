@@ -71,6 +71,7 @@ void GraphMenuWidget::createGradationTransBlock()
 void GraphMenuWidget::makeGradationalConnection()
 {
     connect(negativeBtn, SIGNAL(clicked()), parent(), SLOT(onNegativeBtnClick()));
+    connect(contrastBtn, SIGNAL(clicked()), parent(), SLOT(onContrastBtnClick()));
 }
 
 void GraphMenuWidget::createWindowTransBlock()
