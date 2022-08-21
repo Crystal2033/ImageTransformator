@@ -25,7 +25,7 @@ private:
     QPainter painter;
     QPicture picture;
     QPen histPen, borderPen;
-    int horShift=20, vertShift=20, axisWidthShift;
+    int axisWidthShift;
 
     void paintEvent(QPaintEvent *event) override;
     void paintHistogram();
@@ -35,7 +35,7 @@ private:
     void update(const QImage& img) override;
 
 public:
-    explicit Histogram(QWidget *parent = nullptr);
+    explicit Histogram(const QRect& screenSize, QWidget *parent = nullptr);
     void createHistogram(const QImage& img, const QSize& size);
     ~Histogram() = default;
 

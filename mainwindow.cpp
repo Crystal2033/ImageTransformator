@@ -51,33 +51,36 @@ void MainWindow::addSaveAndSwapBtns(QVBoxLayout*& parentLayout)
 
 void MainWindow::makeInnerWidgets()
 {
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect  screenGeometry = screen->geometry();
+
     globalHorLayout = new QHBoxLayout();
     globalHorLayout->setSpacing(50);
     vertStartLayout = new QVBoxLayout();
     startImageWgt = new ImageWidget(this);
-    histStartImg = new Histogram(this);
+    histStartImg = new Histogram(screenGeometry ,this);
     startImageWgt->addObserver(histStartImg);
 
     vertMenuLayout =  new QVBoxLayout();
 
     vertResultLayout = new QVBoxLayout();
     resultImageWgt = new ImageWidget(this);
-    histResultImg = new Histogram(this);
+    histResultImg = new Histogram(screenGeometry, this);
     resultImageWgt->addObserver(histResultImg);
 
     this->centralWidget()->setLayout(globalHorLayout);
     move(0, 0);
 
-    vertStartLayout->addWidget(startImageWgt);
+    vertStartLayout->addWidget(startImageWgt, Qt::AlignHCenter);
     addLoadImageBtn(vertStartLayout);
-    vertStartLayout->addWidget(histStartImg);
+    vertStartLayout->addWidget(histStartImg, Qt::AlignHCenter);
 
     makeGraphicsMenu();
 
-    vertResultLayout->addWidget(resultImageWgt);
+    vertResultLayout->addWidget(resultImageWgt, Qt::AlignHCenter);
     addSaveAndSwapBtns(vertResultLayout);
 
-    vertResultLayout->addWidget(histResultImg);
+    vertResultLayout->addWidget(histResultImg, Qt::AlignHCenter);
 
     globalHorLayout->addLayout(vertStartLayout);
     globalHorLayout->addLayout(vertMenuLayout);
@@ -185,15 +188,12 @@ void MainWindow::onLoadImageBtnClick()
                                   , err_msg);
             exit(-1);
         }
-        qDebug() << image.size();
         QScreen *screen = QGuiApplication::primaryScreen();
         QRect  screenGeometry = screen->geometry();
-        int height = screenGeometry.height();
-        int width = screenGeometry.width();
-        qDebug() << height << Qt::endl;
-        qDebug() << width << Qt::endl;
+
+
         image = image
-                .scaled(width / 3, height / 2, Qt::KeepAspectRatio)
+                .scaled(screenGeometry.width() / 3, screenGeometry.height() / 2, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
 
         qDebug() << "After resize" << image.size()<< Qt::endl;

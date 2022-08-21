@@ -57,20 +57,22 @@ void Histogram::update(const QImage& img)
 }
 
 
-Histogram::Histogram(QWidget *parent) : QWidget(parent)
+Histogram::Histogram(const QRect& screenSize, QWidget *parent) : QWidget(parent)
 {
+
     histPen.setColor(Qt::darkCyan);
-    histPen.setWidth(2);
+    histPen.setWidth(ceil((double)(screenSize.width() / (3 * BRIGHTNESS_MAX))));
     borderPen.setColor(Qt::black);
-    borderPen.setWidth(6);
+    borderPen.setWidth(4);
     axisWidthShift = borderPen.width();
+    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)screenSize.height() / 4);
     clearHistogram();
 }
 
 void Histogram::createHistogram(const QImage &img, const QSize& size)
 {
     Q_UNUSED(size);
-    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)img.height() / 3 + vertShift);
+
     clearHistogram();
     const uchar* px = img.bits();
     valueOfPixels = img.height() * img.width();
