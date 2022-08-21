@@ -14,23 +14,28 @@
 #include <QPainter>
 #include <QDebug>
 #include "histogram.h"
+#include "subject.h"
 
-
-class ImageWidget : public QWidget
+class ImageWidget : public QWidget, public InterfaceSubject
 {
     Q_OBJECT
 
 public:
     explicit ImageWidget(QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent* event);
+    void paintEvent(QPaintEvent* event) override;
     void setImage(const QImage& img, const QSize& size);
-    QImage& getImage();
+    QImage*& getImage();
     QImage& drawRect(const QImage& img);
     QSize& getPictureSize();
+
+    void addObserver(InterfaceObserver* observer) override;
+    void removeObserver(InterfaceObserver* observer) override;
+    void notify() override;
     ~ImageWidget();
 
 
 private:
+    QList<InterfaceObserver*> observers;
     QPainter* painter = nullptr;
     QImage* img_ptr = nullptr;
     QSize pictureSize;

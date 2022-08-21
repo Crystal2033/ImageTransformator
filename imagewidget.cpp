@@ -9,6 +9,7 @@
 #include "imagefunctions.h"
 #include "exceptions.h"
 #include <QMessageBox>
+#include <QListIterator>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent)
 {
@@ -43,12 +44,13 @@ void ImageWidget::setImage(const QImage& img, const QSize& size)
 
     img_ptr = new QImage(img.scaled(size.width(), size.height(), Qt::KeepAspectRatio).copy());
     this->setFixedSize(img_ptr->width(), img_ptr->height());
+    notify();
 }
 
-QImage &ImageWidget::getImage()
+QImage *&ImageWidget::getImage()
 {
     if(img_ptr){
-        return *img_ptr;
+        return img_ptr;
     }
     QMessageBox::critical(nullptr, "Image existance error", "You don`t have a result image to save it.");
     throw ImageExistanceError("There is no image in widget");
@@ -60,8 +62,38 @@ QSize &ImageWidget::getPictureSize()
     return pictureSize;
 }
 
+void ImageWidget::addObserver(InterfaceObserver *observer)
+{
+    observers.append(observer);
+}
+
+void ImageWidget::removeObserver(InterfaceObserver *observer)
+{
+
+    QList<InterfaceObserver*>::ConstIterator it = observers.constBegin();
+    for ( ; it != observers.constEnd(); ++it ) {
+        if(*it == observer){
+            observers.erase(it);
+            return;
+        }
+    }
+
+    qDebug() << "Observer wasn`t found" << Qt::endl;
+}
+
+void ImageWidget::notify()
+{
+    repaint();
+    for(auto obs : observers){
+        obs->update(*img_ptr);
+    }
+}
+
 ImageWidget::~ImageWidget()
 {
+    for(auto obs : observers){
+        removeObserver(obs);
+    }
     delete painter;
 }
 

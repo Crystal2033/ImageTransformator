@@ -5,19 +5,26 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#ifndef SINGLEPIXELTRANSFORMS_H
-#define SINGLEPIXELTRANSFORMS_H
+#ifndef TRANSFORMATIONS_H
+#define TRANSFORMATIONS_H
 
 #include <imagewidget.h>
 #include <QObject>
 #include <QWidget>
 
-class SinglePixelTransforms
+class Transformations
 {
 public:
-    SinglePixelTransforms();
-    void negativeTransformation(const QImage &image, ImageWidget *& imgWidget, Histogram *& hist) const;
-    ~SinglePixelTransforms();
+    virtual ~Transformations() = default;
+    virtual void transform(const QImage &image, ImageWidget *& imgWidget) const = 0;
 };
 
-#endif // SINGLEPIXELTRANSFORMS_H
+class SinglePixelTransforms : public Transformations
+{
+public:
+    SinglePixelTransforms() = default;
+    void transform(const QImage &image, ImageWidget *& imgWidget) const override ;
+    ~SinglePixelTransforms() = default;
+};
+
+#endif // TRANSFORMATIONS_H

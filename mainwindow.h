@@ -16,7 +16,7 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QPushButton>
-#include "singlepixeltransforms.h"
+#include "transformations.h"
 #include "graphmenuwidget.h"
 #include "imagewidget.h"
 QT_BEGIN_NAMESPACE
@@ -65,11 +65,11 @@ private:
     void addSaveAndSwapBtns(QVBoxLayout*& parentLayout);
     void makeInnerWidgets();
     bool makeAndSaveImage();
-    void addImageOnLayout(QImage& img, QVBoxLayout *&layout, ImageWidget*& imageWgt);
+    //void addImageOnLayout(QImage& img, QVBoxLayout *&layout, ImageWidget*& imageWgt);
     void addLoadImageBtn(QVBoxLayout *& parentLayout);
     void makeGraphicsMenu();
 public:
-    void setImageAndCreateHist(ImageWidget*& imageWidget, Histogram *& hist, const QImage& image);
+    void setImageOnWidget(ImageWidget*& imageWidget, const QImage& image);
 
 private slots:
     void onSaveImageBtnClick();

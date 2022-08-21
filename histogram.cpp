@@ -32,6 +32,7 @@ void Histogram::paintHistogram()
         }
     }
     painter.end();
+    repaint();
 }
 
 void Histogram::clearHistogram()
@@ -49,6 +50,12 @@ void Histogram::drawAxis()
 
 }
 
+void Histogram::update(const QImage& img)
+{
+    createHistogram(img, img.size());
+    repaint();
+}
+
 
 Histogram::Histogram(QWidget *parent) : QWidget(parent)
 {
@@ -62,7 +69,8 @@ Histogram::Histogram(QWidget *parent) : QWidget(parent)
 
 void Histogram::createHistogram(const QImage &img, const QSize& size)
 {
-    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)size.height() / 3 + vertShift);
+    Q_UNUSED(size);
+    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)img.height() / 3 + vertShift);
     clearHistogram();
     const uchar* px = img.bits();
     valueOfPixels = img.height() * img.width();
@@ -72,7 +80,6 @@ void Histogram::createHistogram(const QImage &img, const QSize& size)
         //ImageFunctions::getRGB(const_cast<uchar*&>(px), r, g, b);
         //brightness = ImageFunctions::getBrightness(r, g, b);
         brightness = *px;
-        //qDebug() << brightness << Qt::endl;
         px+=4;
         histogram[brightness]++;
 

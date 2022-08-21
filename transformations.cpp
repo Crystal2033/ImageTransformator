@@ -5,14 +5,10 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#include "singlepixeltransforms.h"
+#include "transformations.h"
 
-SinglePixelTransforms::SinglePixelTransforms()
-{
 
-}
-
-void SinglePixelTransforms::negativeTransformation(const QImage &image, ImageWidget *& imgWidget, Histogram *& hist) const
+void SinglePixelTransforms::transform(const QImage &image, ImageWidget *& imgWidget) const
 {
     QImage* transformedImage = new QImage(image);
     uchar* px = transformedImage->bits();
@@ -21,19 +17,8 @@ void SinglePixelTransforms::negativeTransformation(const QImage &image, ImageWid
     for(int i = 0; i < pixelsQuo; ++i){
         newBrightness = BRIGHTNESS_MAX - *px - 1;
         *px++ = *px++ = *px++ = newBrightness;
-        px += 1;
+        px++;
     }
-
     imgWidget->setImage(*transformedImage, transformedImage->size());
-    hist->createHistogram(imgWidget->getImage(), imgWidget->size());
-    imgWidget->repaint();
-    hist->repaint();
-    //imgWidget->setImage(*transformedImage, transformedImage->size());
-    //Need to think about histogramm and visitor pattern
-
-}
-
-SinglePixelTransforms::~SinglePixelTransforms()
-{
 
 }

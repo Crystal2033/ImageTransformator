@@ -14,8 +14,9 @@
 #include <QPainter>
 #include <QPicture>
 #include "imagefunctions.h"
+#include "observer.h"
 
-class Histogram : public QWidget
+class Histogram : public QWidget, public InterfaceObserver
 {
     Q_OBJECT
 private:
@@ -26,10 +27,12 @@ private:
     QPen histPen, borderPen;
     int horShift=20, vertShift=20, axisWidthShift;
 
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) override;
     void paintHistogram();
     void clearHistogram();
     void drawAxis();
+
+    void update(const QImage& img) override;
 
 public:
     explicit Histogram(QWidget *parent = nullptr);

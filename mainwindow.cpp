@@ -56,12 +56,14 @@ void MainWindow::makeInnerWidgets()
     vertStartLayout = new QVBoxLayout();
     startImageWgt = new ImageWidget(this);
     histStartImg = new Histogram(this);
+    startImageWgt->addObserver(histStartImg);
 
     vertMenuLayout =  new QVBoxLayout();
 
     vertResultLayout = new QVBoxLayout();
     resultImageWgt = new ImageWidget(this);
     histResultImg = new Histogram(this);
+    resultImageWgt->addObserver(histResultImg);
 
     this->centralWidget()->setLayout(globalHorLayout);
     move(0, 0);
@@ -84,17 +86,6 @@ void MainWindow::makeInnerWidgets()
 
 }
 
-void MainWindow::addImageOnLayout(QImage &img, QVBoxLayout *&layout, ImageWidget *&imageWgt)
-{
-    if(imageWgt == nullptr){
-        imageWgt = new ImageWidget(this);
-    }
-
-    imageWgt->setImage(img, QSize(width(), height()));
-    layout->addWidget(imageWgt);
-
-}
-
 void MainWindow::addLoadImageBtn(QVBoxLayout *&parentLayout)
 {
     loadImageBtn = new QPushButton("Load image");
@@ -109,14 +100,9 @@ void MainWindow::makeGraphicsMenu()
 
 }
 
-void MainWindow::setImageAndCreateHist(ImageWidget *&imageWidget, Histogram *&hist, const QImage& image)
+void MainWindow::setImageOnWidget(ImageWidget *&imageWidget, const QImage& image)
 {
-
-    //QImage* brightnessImage = &ImageFunctions::setToBrightnessMap(image);
     imageWidget->setImage(image, image.size());
-    hist->createHistogram(imageWidget->getImage(), imageWidget->size());
-    imageWidget->repaint();
-    hist->repaint();
 }
 
 void MainWindow::onSaveImageBtnClick()
@@ -124,8 +110,14 @@ void MainWindow::onSaveImageBtnClick()
     QFileDialog::Options options;
     QString selectedFilter;
     QString fileName = "";
-    if(!resultImageWgt){
-        QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
+    try {
+        if(!resultImageWgt->getImage()){
+            QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
+            return;
+        }
+    }
+    catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
         return;
     }
 
@@ -138,7 +130,7 @@ void MainWindow::onSaveImageBtnClick()
       // QSize startPictureSize =resultImageWgt->getPictureSize();
       // resultImageWgt->getImage().scaled(startPictureSize.width(), startPictureSize.height(), Qt::KeepAspectRatio).save(fileName);
         try{
-            resultImageWgt->getImage().save(fileName);
+            resultImageWgt->getImage()->save(fileName);
         }
         catch (ImageExistanceError& err) {
             Q_UNUSED(err);
@@ -155,16 +147,14 @@ void MainWindow::onSwapImagesBtnClick()
         return;
     }
     try{
-        startImage = &startImageWgt->getImage();
-        //delete startImage;
-        startImage = &resultImageWgt->getImage();
+        startImage = resultImageWgt->getImage();
     }
     catch (ImageExistanceError& err) {
         Q_UNUSED(err);
         return;
     }
 
-    setImageAndCreateHist(startImageWgt, histStartImg, *startImage);
+    setImageOnWidget(startImageWgt, *startImage);
 }
 
 
@@ -199,7 +189,7 @@ void MainWindow::onLoadImageBtnClick()
                 .scaled(800, 600, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
 
-        setImageAndCreateHist(startImageWgt, histStartImg, image);
+        setImageOnWidget(startImageWgt, image);
 
     }
 }
@@ -207,9 +197,9 @@ void MainWindow::onLoadImageBtnClick()
 void MainWindow::onNegativeBtnClick()
 {
     try {
-        singlePixelTransformator->negativeTransformation(startImageWgt->getImage(), resultImageWgt, histResultImg);
+        singlePixelTransformator->transform(*startImageWgt->getImage(), resultImageWgt);
     }  catch (ImageExistanceError& err) {
-
+        Q_UNUSED(err);
     }
 }
 

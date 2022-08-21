@@ -16,7 +16,7 @@ SOURCES += \
     imagewidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    singlepixeltransforms.cpp
+    transformations.cpp
 
 HEADERS += \
     exceptions.h \
@@ -25,7 +25,9 @@ HEADERS += \
     imagefunctions.h \
     imagewidget.h \
     mainwindow.h \
-    singlepixeltransforms.h
+    observer.h \
+    subject.h \
+    transformations.h
 
 FORMS += \
     mainwindow.ui
