@@ -65,7 +65,7 @@ Histogram::Histogram(const QRect& screenSize, QWidget *parent) : QWidget(parent)
     borderPen.setColor(Qt::black);
     borderPen.setWidth(4);
     axisWidthShift = borderPen.width();
-    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)screenSize.height() / 4);
+    setFixedSize((double)histPen.width() * BRIGHTNESS_MAX, (double)screenSize.height() / 5);
     clearHistogram();
 }
 
