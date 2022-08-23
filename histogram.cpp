@@ -31,7 +31,6 @@ void Histogram::paintHistogram()
             painter.drawLine(i * histPen.width(), height(), i * histPen.width(), height() - ( (double)histogram[i]/maxHeight * height()) );
         }
     }
-    qDebug() << "Max: " <<  maxHeight << Qt::endl;
     painter.end();
     repaint();
 }

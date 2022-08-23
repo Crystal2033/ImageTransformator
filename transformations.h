@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QWidget>
 #include "transformoptions.h"
+#include <QtMath>
 
 //class Transformations
 //{
@@ -43,6 +44,24 @@ class ContrastTransform : public SinglePixelTransforms
 public:
     ContrastTransform() = default;
     ~ContrastTransform() = default;
+    unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
+     //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
+};
+
+class LogarythmTransform : public SinglePixelTransforms
+{
+public:
+    LogarythmTransform() = default;
+    ~LogarythmTransform() = default;
+    unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
+     //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
+};
+
+class GammaCorrection : public SinglePixelTransforms
+{
+public:
+    GammaCorrection() = default;
+    ~GammaCorrection() = default;
     unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
      //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
 };

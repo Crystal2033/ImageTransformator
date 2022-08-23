@@ -19,7 +19,7 @@
 #include "transformations.h"
 #include "graphmenuwidget.h"
 #include "imagewidget.h"
-#include "contrasttool.h"
+#include "optionstool.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -61,7 +61,7 @@ private:
 
     //Transformators
     SinglePixelTransforms* transformStrategy = nullptr;
-    ContrastTool* contrastTool = nullptr;
+    OptionsTool* contrastTool = nullptr;
 
     //Functions
     void addSaveAndSwapBtns(QVBoxLayout*& parentLayout);
@@ -81,6 +81,8 @@ private slots:
 public slots:
     void onNegativeBtnClick();
     void onContrastBtnClick();
+    void onLogarythmBtnClick();
+    void onGammaCorrectionBtnClick();
 
 };
 #endif // MAINWINDOW_H

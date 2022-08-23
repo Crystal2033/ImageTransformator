@@ -5,8 +5,8 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#ifndef CONTRASTTOOL_H
-#define CONTRASTTOOL_H
+#ifndef OPTIONSTOOL_H
+#define OPTIONSTOOL_H
 
 #include <QObject>
 #include <QDialog>
@@ -22,37 +22,50 @@
 #include "transformations.h"
 
 
-class ContrastTool : public QDialog
+class OptionsTool : public QDialog
 {
     Q_OBJECT
 private:
-    QHBoxLayout* horDataLayout = nullptr;
-    QLabel* dataLabel = nullptr;
+    QHBoxLayout* horConstantDataLay = nullptr;
+    QLabel* constantLabel = nullptr;
     QLCDNumber* digitalGadget = nullptr;
     QVBoxLayout* vertLayout = nullptr;
-    QHBoxLayout* horBtnsLayout = nullptr;
+    QHBoxLayout* acceptCancelHorLay = nullptr;
     QPushButton* acceptBtn = nullptr;
     QPushButton* cancelBtn = nullptr;
-    QSlider* slider = nullptr;
+    QSlider* constantSlider = nullptr;
+
+
+    QHBoxLayout* horGammaConstantLay;
+    QLabel* gammaLabel = nullptr;
+    QLCDNumber* digitalGadget2 = nullptr;
+    QSlider* gammaSlider = nullptr;
+
 
     TransformOptions* options = nullptr;
-    SinglePixelTransforms* transformator;
-    ImageWidget* imageWidget;
-    QImage* image;
+    SinglePixelTransforms* transformator = nullptr;
+    ImageWidget* imageWidget = nullptr;
+    QImage* image = nullptr;
 
-    ~ContrastTool();
+    ~OptionsTool();
 
 public:
-    explicit ContrastTool(QWidget *parent = nullptr);
+    explicit OptionsTool(QWidget *parent = nullptr);
     TransformOptions& getOptions();
     void setTransformImageData(QImage*& image, ImageWidget*&  imageWidget, SinglePixelTransforms* const& transformator);
+
+    void setContrastSet();
+    void setLogarythmSet();
+    void setGammaSet();
+    void setAreaCutSet();
 
 
 signals:
 
 private slots:
-    void onValueChangedSlot(int val);
+    void onConstantValueChanged(int val);
+    void onGammaValueChanged(int val);
 
 };
 
-#endif // CONTRASTTOOL_H
+#endif // OPTIONSTOOL_H

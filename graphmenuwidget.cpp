@@ -51,11 +51,11 @@ void GraphMenuWidget::createGradationTransBlock()
     gradTransformLabel->setAlignment(Qt::AlignCenter);
     gradTransformLabel->setWordWrap(true);
 
-    contrastBtn = new QPushButton("Contrast Transform (add description)");
+    contrastBtn = new QPushButton("Contrast Transform");
     negativeBtn = new QPushButton("Negative Transform");
-    logarithmBtn = new QPushButton("Logarithm Transform (add description)");
-    gammaCorrectionBtn = new QPushButton("Gamma Correction (add description)");
-    cuttingBtn = new QPushButton("Area Cutting (add description)");
+    logarithmBtn = new QPushButton("Logarithm Transform");
+    gammaCorrectionBtn = new QPushButton("Gamma Correction (add impl)");
+    cuttingBtn = new QPushButton("Area Cutting (add impl)");
     makeGradationalConnection();
 
     vertGradTransfItems->addWidget(gradTransformLabel);
@@ -72,6 +72,8 @@ void GraphMenuWidget::makeGradationalConnection()
 {
     connect(negativeBtn, SIGNAL(clicked()), parent(), SLOT(onNegativeBtnClick()));
     connect(contrastBtn, SIGNAL(clicked()), parent(), SLOT(onContrastBtnClick()));
+    connect(logarithmBtn, SIGNAL(clicked()), parent(), SLOT(onLogarythmBtnClick()));
+    connect(gammaCorrectionBtn, SIGNAL(clicked()), parent(), SLOT(onGammaCorrectionBtnClick()));
 }
 
 void GraphMenuWidget::createWindowTransBlock()
@@ -85,11 +87,11 @@ void GraphMenuWidget::createWindowTransBlock()
     windowTransformLabel->setWordWrap(true);
     windowTransformLabel->setText(QString("Window transformation"));
 
-    averageBtn = new QPushButton("Average Transform (add description)");
-    gaussBtn = new QPushButton("Gauss Transform (add description)");
-    medianBtn = new QPushButton("Median Filter (add description)");
-    laplassianBtn = new QPushButton("Laplassian (add description)");
-    gradientBtn = new QPushButton("Gradient (add description)");
+    averageBtn = new QPushButton("Average Transform (add impl)");
+    gaussBtn = new QPushButton("Gauss Transform (add impl)");
+    medianBtn = new QPushButton("Median Filter (add impl)");
+    laplassianBtn = new QPushButton("Laplassian (add impl)");
+    gradientBtn = new QPushButton("Gradient (add impl)");
 
     vertWindowTransfItems->addWidget(windowTransformLabel);
     vertWindowTransfItems->addWidget(averageBtn);
@@ -112,8 +114,8 @@ void GraphMenuWidget::createFourierTransBlock()
     fourierTransformLabel->setWordWrap(true);
     fourierTransformLabel->setText(QString("Fourier transformations"));
 
-    simpleFourierTransform = new QPushButton("Simple Fourier Transform (add description)");
-    fastFourierTransform = new QPushButton("Fast Fourier Transform (add description)");
+    simpleFourierTransform = new QPushButton("Simple Fourier Transform (add impl)");
+    fastFourierTransform = new QPushButton("Fast Fourier Transform (add impl)");
 
     vertFourierTransfItems->addWidget(fourierTransformLabel);
     vertFourierTransfItems->addWidget(simpleFourierTransform);

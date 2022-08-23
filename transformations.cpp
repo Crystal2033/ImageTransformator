@@ -41,3 +41,14 @@ unsigned int ContrastTransform::transformationHook(uchar *&px, TransformOptions 
 {
     return (*px > options->getConstant()) ? BRIGHTNESS_MAX - 1 : *px;
 }
+
+unsigned int LogarythmTransform::transformationHook(uchar *&px, TransformOptions * const &options) const
+{
+    return options->getConstant() * qLn(*px + 1);
+}
+
+unsigned int GammaCorrection::transformationHook(uchar *&px, TransformOptions * const &options) const
+{
+    int value = double(options->getConstant()/2) * qPow(*px, double(options->getGammaConstant() / 5));
+    return value; //magic constan
+}

@@ -223,7 +223,7 @@ void MainWindow::onNegativeBtnClick()
 void MainWindow::onContrastBtnClick()
 {
     if(!contrastTool){
-        contrastTool = new ContrastTool(this);
+        contrastTool = new OptionsTool(this);
     }
     if(transformStrategy){
         delete transformStrategy;
@@ -234,6 +234,7 @@ void MainWindow::onContrastBtnClick()
     //int dialogCodeResult = contrastTool->exec();
     try {
         contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        contrastTool->setContrastSet();
         contrastTool->exec();
 //        if(dialogCodeResult == QDialog::Accepted){
 //            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
@@ -241,9 +242,54 @@ void MainWindow::onContrastBtnClick()
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
+}
+
+void MainWindow::onLogarythmBtnClick()
+{
+    if(!contrastTool){
+        contrastTool = new OptionsTool(this);
+    }
+    if(transformStrategy){
+        delete transformStrategy;
+    }
+    transformStrategy = new LogarythmTransform;
 
 
+    //int dialogCodeResult = contrastTool->exec();
+    try {
+        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        contrastTool->setLogarythmSet();
+        contrastTool->exec();
+//        if(dialogCodeResult == QDialog::Accepted){
+//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
+//        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+}
 
+void MainWindow::onGammaCorrectionBtnClick()
+{
+    if(!contrastTool){
+        contrastTool = new OptionsTool(this);
+    }
+    if(transformStrategy){
+        delete transformStrategy;
+    }
+
+    transformStrategy = new GammaCorrection;
+
+    //int dialogCodeResult = contrastTool->exec();
+    try {
+        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        contrastTool->setGammaSet();
+        contrastTool->exec();
+//        if(dialogCodeResult == QDialog::Accepted){
+//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
+//        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
 }
 
 

@@ -9,7 +9,6 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    contrasttool.cpp \
     exceptions.cpp \
     graphmenuwidget.cpp \
     histogram.cpp \
@@ -17,11 +16,11 @@ SOURCES += \
     imagewidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    optionstool.cpp \
     transformations.cpp \
     transformoptions.cpp
 
 HEADERS += \
-    contrasttool.h \
     exceptions.h \
     graphmenuwidget.h \
     histogram.h \
@@ -29,6 +28,7 @@ HEADERS += \
     imagewidget.h \
     mainwindow.h \
     observer.h \
+    optionstool.h \
     subject.h \
     transformations.h \
     transformoptions.h
