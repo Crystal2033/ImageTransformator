@@ -17,7 +17,8 @@ SOURCES += \
     imagewidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    transformations.cpp
+    transformations.cpp \
+    transformoptions.cpp
 
 HEADERS += \
     contrasttool.h \
@@ -29,7 +30,8 @@ HEADERS += \
     mainwindow.h \
     observer.h \
     subject.h \
-    transformations.h
+    transformations.h \
+    transformoptions.h
 
 FORMS += \
     mainwindow.ui

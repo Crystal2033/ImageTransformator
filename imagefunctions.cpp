@@ -13,7 +13,7 @@ void ImageFunctions::setPixColor(uchar*& pix, int r, int g, int b)
     *pix = r;
     *++pix = g;
     *++pix = b;
-    pix+=2;
+    pix += 2;
 
 }
 
@@ -72,13 +72,13 @@ QImage& ImageFunctions::setToBrightnessMap(const QImage& img)
         getRGB(px, r, g, b);
         px -= 4;
 
-        brightness = getBrightness(r, g, b);
-
-        *px = brightness;
-        *++px = brightness;
-        *++px = brightness;
-
-        px += 2;
+        if(r == g && g == b && r == b){
+            brightness = *px;
+        }
+        else{
+           brightness = getBrightness(r, g, b);
+        }
+        setPixColor(px, brightness, brightness, brightness);
     }
     return *copy_image;
 }
@@ -99,5 +99,5 @@ void ImageFunctions::getRGB(uchar *&px, int &r, int &g, int &b)
     r = *px;
     g = *++px;
     b = *++px;
-    px+=2;
+    px += 2;
 }

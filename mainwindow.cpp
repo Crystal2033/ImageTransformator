@@ -190,10 +190,11 @@ void MainWindow::onLoadImageBtnClick()
         QScreen *screen = QGuiApplication::primaryScreen();
         QRect  screenGeometry = screen->geometry();
 
-
+        //Need to delete this variable
         image = image
                 .scaled(screenGeometry.width() / 3, screenGeometry.height() / 2, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        image = ImageFunctions::setToBrightnessMap(image);
 
         setImageOnWidget(startImageWgt, image);
 
@@ -205,6 +206,11 @@ void MainWindow::onNegativeBtnClick()
     if(transformStrategy){
         delete transformStrategy;
     }
+    if(!resultImageWgt){
+        QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
+        return;
+    }
+
 
     transformStrategy = new NegativeTransform();
     try {
@@ -219,7 +225,25 @@ void MainWindow::onContrastBtnClick()
     if(!contrastTool){
         contrastTool = new ContrastTool(this);
     }
-    contrastTool->exec();
+    if(transformStrategy){
+        delete transformStrategy;
+    }
+    transformStrategy = new ContrastTransform;
+
+
+    //int dialogCodeResult = contrastTool->exec();
+    try {
+        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        contrastTool->exec();
+//        if(dialogCodeResult == QDialog::Accepted){
+//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
+//        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+
+
+
 }
 
 

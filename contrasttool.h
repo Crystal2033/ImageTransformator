@@ -15,6 +15,11 @@
 #include <QSlider>
 #include <QPushButton>
 #include <QLabel>
+#include <QScrollBar>
+#include "transformoptions.h"
+#include "imagewidget.h"
+#include <QImage>
+#include "transformations.h"
 
 
 class ContrastTool : public QDialog
@@ -30,10 +35,23 @@ private:
     QPushButton* cancelBtn = nullptr;
     QSlider* slider = nullptr;
 
+    TransformOptions* options = nullptr;
+    SinglePixelTransforms* transformator;
+    ImageWidget* imageWidget;
+    QImage* image;
+
+    ~ContrastTool();
+
 public:
     explicit ContrastTool(QWidget *parent = nullptr);
+    TransformOptions& getOptions();
+    void setTransformImageData(QImage*& image, ImageWidget*&  imageWidget, SinglePixelTransforms* const& transformator);
+
 
 signals:
+
+private slots:
+    void onValueChangedSlot(int val);
 
 };
 

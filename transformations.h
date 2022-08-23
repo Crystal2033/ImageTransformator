@@ -11,19 +11,21 @@
 #include <imagewidget.h>
 #include <QObject>
 #include <QWidget>
+#include "transformoptions.h"
 
-class Transformations
-{
-public:
-    virtual ~Transformations() = default;
-    virtual void transform(const QImage &image, ImageWidget *& imgWidget) const = 0;
-};
+//class Transformations
+//{
+//public:
+//    virtual ~Transformations() = default;
+//    virtual void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const = 0;
+//};
 
-class SinglePixelTransforms : public Transformations
+class SinglePixelTransforms
 {
 public:
     SinglePixelTransforms() = default;
-    virtual void transform(const QImage &image, ImageWidget *& imgWidget) const override = 0 ;
+    virtual unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const;
+    virtual void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const;
     virtual ~SinglePixelTransforms() = default;
 };
 
@@ -32,7 +34,17 @@ class NegativeTransform : public SinglePixelTransforms
 public:
     NegativeTransform() = default;
     ~NegativeTransform() = default;
-     void transform(const QImage &image, ImageWidget *& imgWidget) const override ;
+    unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
+    //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
+};
+
+class ContrastTransform : public SinglePixelTransforms
+{
+public:
+    ContrastTransform() = default;
+    ~ContrastTransform() = default;
+    unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
+     //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
 };
 
 #endif // TRANSFORMATIONS_H

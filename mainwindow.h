@@ -60,7 +60,7 @@ private:
     GraphMenuWidget* graphMenuWidget = nullptr;
 
     //Transformators
-    Transformations* transformStrategy = nullptr;
+    SinglePixelTransforms* transformStrategy = nullptr;
     ContrastTool* contrastTool = nullptr;
 
     //Functions
