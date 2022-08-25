@@ -5,7 +5,7 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#include "transformations.h"
+#include "Algorithms/transformations.h"
 
 unsigned int SinglePixelTransforms::transformationHook(uchar *&px, TransformOptions * const &options) const
 {
@@ -39,7 +39,7 @@ unsigned int NegativeTransform::transformationHook(uchar *&px, TransformOptions 
 
 unsigned int ContrastTransform::transformationHook(uchar *&px, TransformOptions * const &options) const
 {
-    return (*px > options->getConstant()) ? BRIGHTNESS_MAX - 1 : *px;
+    return (*px >= options->getConstant()) ? BRIGHTNESS_MAX - 1 : *px;
 }
 
 unsigned int LogarythmTransform::transformationHook(uchar *&px, TransformOptions * const &options) const
@@ -49,6 +49,20 @@ unsigned int LogarythmTransform::transformationHook(uchar *&px, TransformOptions
 
 unsigned int GammaCorrection::transformationHook(uchar *&px, TransformOptions * const &options) const
 {
-    int value = double(options->getConstant()/2) * qPow(*px, double(options->getGammaConstant() / 5));
-    return value; //magic constan
+    double brightness = qPow(double(*px)/(BRIGHTNESS_MAX - 1), double(options->getGammaConstant())/GAMMA_COEFF);
+    int value = floor((double(options->getConstant())/GAMMA_COEFF*brightness)*255);
+    if(value >= BRIGHTNESS_MAX - 1)
+    {
+        return BRIGHTNESS_MAX - 1;
+    }
+    return value;
+}
+
+unsigned int AreaCutting::transformationHook(uchar *&px, TransformOptions * const &options) const
+{
+    if(options->isAreaContrastChecked())
+    {
+        return (*px >= options->getLeftAreaRange() && *px <= options->getRightAreaRange()) ? BRIGHTNESS_MAX - 1: 0;
+    }
+    return (*px >= options->getLeftAreaRange() && *px <= options->getRightAreaRange()) ? *px: 0;
 }

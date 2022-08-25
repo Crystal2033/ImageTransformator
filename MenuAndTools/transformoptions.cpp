@@ -17,14 +17,29 @@ unsigned int TransformOptions::getConstant() const
     return constantNumber;
 }
 
-QPair<unsigned int, unsigned int> TransformOptions::getConstEdges() const
-{
-    return QPair<unsigned int, unsigned int>(leftConstantEdge, rightConstantEdge);
-}
-
 int TransformOptions::getGammaConstant() const
 {
     return gammaConstant;
+}
+
+bool TransformOptions::isAreaContrastChecked() const
+{
+    return areaContrastChecker;
+}
+
+int TransformOptions::getLeftAreaRange() const
+{
+    return rangeArea.first;
+}
+
+int TransformOptions::getRightAreaRange() const
+{
+    return rangeArea.second;
+}
+
+void TransformOptions::setAreaCheckStatus(const bool status)
+{
+    areaContrastChecker = status;
 }
 
 void TransformOptions::setConstant(const unsigned int constant)
@@ -32,13 +47,23 @@ void TransformOptions::setConstant(const unsigned int constant)
     constantNumber = constant;
 }
 
-void TransformOptions::setConstEdges(const QPair<unsigned int, unsigned int> &numPair)
+void TransformOptions::setRangeArea(const QPair<int, int> &area)
 {
-    leftConstantEdge = numPair.first;
-    rightConstantEdge = numPair.second;
+    rangeArea.first = area.first;
+    rangeArea.second = area.second;
 }
 
 void TransformOptions::setGammaConst(const int gamma)
 {
     gammaConstant = gamma;
+}
+
+void TransformOptions::setLeftAreaRange(const int val)
+{
+    rangeArea.first = val;
+}
+
+void TransformOptions::setRightAreaRange(const int val)
+{
+    rangeArea.second = val;
 }

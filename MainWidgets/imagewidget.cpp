@@ -6,8 +6,8 @@
  *                                                                         *
  ***************************************************************************/
 #include "imagewidget.h"
-#include "imagefunctions.h"
-#include "exceptions.h"
+#include "ImageMiscellaneous/imagefunctions.h"
+#include "Exceptions/exceptions.h"
 #include <QMessageBox>
 #include <QListIterator>
 

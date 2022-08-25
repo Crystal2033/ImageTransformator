@@ -51,11 +51,11 @@ void GraphMenuWidget::createGradationTransBlock()
     gradTransformLabel->setAlignment(Qt::AlignCenter);
     gradTransformLabel->setWordWrap(true);
 
-    contrastBtn = new QPushButton("Contrast Transform");
+    contrastBtn = new QPushButton("&Contrast Transform");
     negativeBtn = new QPushButton("Negative Transform");
     logarithmBtn = new QPushButton("Logarithm Transform");
-    gammaCorrectionBtn = new QPushButton("Gamma Correction (add impl)");
-    cuttingBtn = new QPushButton("Area Cutting (add impl)");
+    gammaCorrectionBtn = new QPushButton("Gamma Correction");
+    cuttingBtn = new QPushButton("Area Cutting");
     makeGradationalConnection();
 
     vertGradTransfItems->addWidget(gradTransformLabel);
@@ -74,6 +74,7 @@ void GraphMenuWidget::makeGradationalConnection()
     connect(contrastBtn, SIGNAL(clicked()), parent(), SLOT(onContrastBtnClick()));
     connect(logarithmBtn, SIGNAL(clicked()), parent(), SLOT(onLogarythmBtnClick()));
     connect(gammaCorrectionBtn, SIGNAL(clicked()), parent(), SLOT(onGammaCorrectionBtnClick()));
+    connect(cuttingBtn, SIGNAL(clicked()), parent(), SLOT(onAreaCutBtnClick()));
 }
 
 void GraphMenuWidget::createWindowTransBlock()

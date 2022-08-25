@@ -16,8 +16,10 @@
 #include <QLabel>
 #include <QFileDialog>
 #include <QScreen>
-#include "histogram.h"
-#include "exceptions.h"
+#include "MainWidgets/histogram.h"
+#include "Exceptions/exceptions.h"
+#include <QtMath>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     makeInnerWidgets();
+
 }
 
 MainWindow::~MainWindow()
@@ -211,6 +214,16 @@ void MainWindow::onNegativeBtnClick()
         return;
     }
 
+//    double brightness = 255.0/(BRIGHTNESS_MAX - 1);
+//    brightness = qPow(brightness, 0.5);
+//    qDebug() << brightness << Qt::endl;
+//    int value = floor((1*brightness)*255);
+//    if(value > BRIGHTNESS_MAX - 1)
+//    {
+//        qDebug() << 255 << Qt::endl;
+//    }
+//    qDebug() << value << Qt::endl;
+
 
     transformStrategy = new NegativeTransform();
     try {
@@ -222,9 +235,13 @@ void MainWindow::onNegativeBtnClick()
 
 void MainWindow::onContrastBtnClick()
 {
-    if(!contrastTool){
-        contrastTool = new OptionsTool(this);
+    ToolBuilder* builder = new ConstrastToolBuilder(this);
+
+    if(tool){
+        delete tool;
     }
+    tool = builder->createTool();
+
     if(transformStrategy){
         delete transformStrategy;
     }
@@ -233,22 +250,26 @@ void MainWindow::onContrastBtnClick()
 
     //int dialogCodeResult = contrastTool->exec();
     try {
-        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
-        contrastTool->setContrastSet();
-        contrastTool->exec();
+        tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+//        contrastTool->setContrastSet();
+        tool->exec();
 //        if(dialogCodeResult == QDialog::Accepted){
 //            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
 //        }
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
+    delete builder;
 }
 
 void MainWindow::onLogarythmBtnClick()
 {
-    if(!contrastTool){
-        contrastTool = new OptionsTool(this);
+    ToolBuilder* builder = new LogarythmToolBuilder(this);
+    if(tool){
+        delete tool;
     }
+    tool = builder->createTool();
+
     if(transformStrategy){
         delete transformStrategy;
     }
@@ -257,39 +278,62 @@ void MainWindow::onLogarythmBtnClick()
 
     //int dialogCodeResult = contrastTool->exec();
     try {
-        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
-        contrastTool->setLogarythmSet();
-        contrastTool->exec();
+        tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        //contrastTool->setLogarythmSet();
+        tool->exec();
 //        if(dialogCodeResult == QDialog::Accepted){
 //            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
 //        }
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
+    delete builder;
 }
 
 void MainWindow::onGammaCorrectionBtnClick()
 {
-    if(!contrastTool){
-        contrastTool = new OptionsTool(this);
+    ToolBuilder* builder = new GammaToolBuilder(this);
+    if(tool){
+        delete tool;
     }
+    tool = builder->createTool();
+
     if(transformStrategy){
         delete transformStrategy;
     }
 
     transformStrategy = new GammaCorrection;
 
-    //int dialogCodeResult = contrastTool->exec();
     try {
-        contrastTool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
-        contrastTool->setGammaSet();
-        contrastTool->exec();
-//        if(dialogCodeResult == QDialog::Accepted){
-//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
-//        }
+        tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        tool->exec();
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
+    delete builder;
+}
+
+void MainWindow::onAreaCutBtnClick()
+{
+    ToolBuilder* builder = new AreaCuttingBuilder(this);
+    if(tool){
+        delete tool;
+    }
+    tool = builder->createTool();
+
+    if(transformStrategy){
+        delete transformStrategy;
+    }
+
+    transformStrategy = new AreaCutting;
+    try {
+
+        tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
+        tool->exec();
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete builder;
 }
 
 

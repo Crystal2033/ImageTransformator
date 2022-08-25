@@ -13,21 +13,26 @@ class TransformOptions
 {
 private:
     unsigned int constantNumber = 0;
-    unsigned int leftConstantEdge = 0;
-    unsigned int rightConstantEdge = 0;
     int gammaConstant = 0;
+    QPair<int, int> rangeArea;
+    bool areaContrastChecker = false;
 
 public:
     TransformOptions();
     //GETTERS
     unsigned int getConstant() const;
-    QPair<unsigned int, unsigned int> getConstEdges() const;
     int getGammaConstant() const;
+    bool isAreaContrastChecked() const;
+    int getLeftAreaRange() const;
+    int getRightAreaRange() const;
 
     //SETTERS
+    void setAreaCheckStatus(const bool status);
     void setConstant(const unsigned int constant);
-    void setConstEdges(const QPair<unsigned int, unsigned int>& numPair);
+    void setRangeArea(const QPair<int, int>& area);
     void setGammaConst(const int gamma);
+    void setLeftAreaRange(const int val);
+    void setRightAreaRange(const int val);
 
 };
 

@@ -9,29 +9,33 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    exceptions.cpp \
-    graphmenuwidget.cpp \
-    histogram.cpp \
-    imagefunctions.cpp \
-    imagewidget.cpp \
+    Algorithms/transformations.cpp \
+    Exceptions/exceptions.cpp \
+    ImageMiscellaneous/imagefunctions.cpp \
+    MainWidgets/histogram.cpp \
+    MainWidgets/imagewidget.cpp \
+    MenuAndTools/graphmenuwidget.cpp \
+    MenuAndTools/optionstool.cpp \
+    MenuAndTools/rangeslider.cpp \
+    MenuAndTools/transformoptions.cpp \
+    MenuAndTools/graphmenuwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    optionstool.cpp \
-    transformations.cpp \
-    transformoptions.cpp
 
 HEADERS += \
-    exceptions.h \
-    graphmenuwidget.h \
-    histogram.h \
-    imagefunctions.h \
-    imagewidget.h \
+    Algorithms/transformations.h \
+    Exceptions/exceptions.h \
+    ImageMiscellaneous/imagefunctions.h \
+    MainWidgets/histogram.h \
+    MainWidgets/imagewidget.h \
+    MainWidgets/observer.h \
+    MainWidgets/subject.h \
+    MenuAndTools/graphmenuwidget.h \
+    MenuAndTools/optionstool.h \
+    MenuAndTools/rangeslider.h \
+    MenuAndTools/transformoptions.h \
+    MenuAndTools/graphmenuwidget.h \
     mainwindow.h \
-    observer.h \
-    optionstool.h \
-    subject.h \
-    transformations.h \
-    transformoptions.h
 
 FORMS += \
     mainwindow.ui

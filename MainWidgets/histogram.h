@@ -13,7 +13,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QPicture>
-#include "imagefunctions.h"
+#include "ImageMiscellaneous/imagefunctions.h"
 #include "observer.h"
 
 class Histogram : public QWidget, public InterfaceObserver

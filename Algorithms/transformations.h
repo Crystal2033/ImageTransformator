@@ -8,18 +8,13 @@
 #ifndef TRANSFORMATIONS_H
 #define TRANSFORMATIONS_H
 
-#include <imagewidget.h>
+#include "MainWidgets/imagewidget.h"
 #include <QObject>
 #include <QWidget>
-#include "transformoptions.h"
+#include "MenuAndTools/transformoptions.h"
 #include <QtMath>
 
-//class Transformations
-//{
-//public:
-//    virtual ~Transformations() = default;
-//    virtual void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const = 0;
-//};
+#define GAMMA_COEFF 25
 
 class SinglePixelTransforms
 {
@@ -62,6 +57,15 @@ class GammaCorrection : public SinglePixelTransforms
 public:
     GammaCorrection() = default;
     ~GammaCorrection() = default;
+    unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
+     //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
+};
+
+class AreaCutting : public SinglePixelTransforms
+{
+public:
+    AreaCutting() = default;
+    ~AreaCutting() = default;
     unsigned int transformationHook(uchar*& px, TransformOptions* const& options = nullptr) const override;
      //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
 };

@@ -16,10 +16,10 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QPushButton>
-#include "transformations.h"
-#include "graphmenuwidget.h"
-#include "imagewidget.h"
-#include "optionstool.h"
+#include "Algorithms/transformations.h"
+#include "MenuAndTools/graphmenuwidget.h"
+#include "MainWidgets/imagewidget.h"
+#include "MenuAndTools/optionstool.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -61,7 +61,7 @@ private:
 
     //Transformators
     SinglePixelTransforms* transformStrategy = nullptr;
-    OptionsTool* contrastTool = nullptr;
+    OptionsTool* tool = nullptr;
 
     //Functions
     void addSaveAndSwapBtns(QVBoxLayout*& parentLayout);
@@ -83,6 +83,7 @@ public slots:
     void onContrastBtnClick();
     void onLogarythmBtnClick();
     void onGammaCorrectionBtnClick();
+    void onAreaCutBtnClick();
 
 };
 #endif // MAINWINDOW_H
