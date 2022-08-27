@@ -132,10 +132,8 @@ void MainWindow::onSaveImageBtnClick()
                                         options);
     if (!fileName.isEmpty())
     {
-      // QSize startPictureSize =resultImageWgt->getPictureSize();
-      // resultImageWgt->getImage().scaled(startPictureSize.width(), startPictureSize.height(), Qt::KeepAspectRatio).save(fileName);
         try{
-            resultImageWgt->getImage()->save(fileName);
+            resultImageWgt->getImage()->scaled(startedImageSize.width(), startedImageSize.height(), Qt::KeepAspectRatio).save(fileName);
         }
         catch (ImageExistanceError& err) {
             Q_UNUSED(err);
@@ -194,6 +192,7 @@ void MainWindow::onLoadImageBtnClick()
         QRect  screenGeometry = screen->geometry();
 
         //Need to delete this variable
+        startedImageSize = image.size();
         image = image
                 .scaled(screenGeometry.width() / 3, screenGeometry.height() / 2, Qt::KeepAspectRatio)
                 .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
@@ -213,17 +212,6 @@ void MainWindow::onNegativeBtnClick()
         QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
         return;
     }
-
-//    double brightness = 255.0/(BRIGHTNESS_MAX - 1);
-//    brightness = qPow(brightness, 0.5);
-//    qDebug() << brightness << Qt::endl;
-//    int value = floor((1*brightness)*255);
-//    if(value > BRIGHTNESS_MAX - 1)
-//    {
-//        qDebug() << 255 << Qt::endl;
-//    }
-//    qDebug() << value << Qt::endl;
-
 
     transformStrategy = new NegativeTransform();
     try {
@@ -247,15 +235,9 @@ void MainWindow::onContrastBtnClick()
     }
     transformStrategy = new ContrastTransform;
 
-
-    //int dialogCodeResult = contrastTool->exec();
     try {
         tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
-//        contrastTool->setContrastSet();
         tool->exec();
-//        if(dialogCodeResult == QDialog::Accepted){
-//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
-//        }
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
@@ -276,14 +258,9 @@ void MainWindow::onLogarythmBtnClick()
     transformStrategy = new LogarythmTransform;
 
 
-    //int dialogCodeResult = contrastTool->exec();
     try {
         tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
-        //contrastTool->setLogarythmSet();
         tool->exec();
-//        if(dialogCodeResult == QDialog::Accepted){
-//            transformStrategy->transform(*startImageWgt->getImage(), resultImageWgt, &contrastTool->getOptions());
-//        }
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }

@@ -22,11 +22,6 @@ void GraphMenuWidget::createMenu(QBoxLayout* parentLayout)
 
     vertMenuItems->setSizeConstraint(QLayout::SetMinimumSize);
 
-//    for(int i = 0; i < 60; i++){
-//        QPushButton* btn = new QPushButton(QString::number(i) + " item");
-//        vertMenuItems->addWidget(btn);
-//    }
-
     createGradationTransBlock();
     createWindowTransBlock();
     createFourierTransBlock();
@@ -77,6 +72,16 @@ void GraphMenuWidget::makeGradationalConnection()
     connect(cuttingBtn, SIGNAL(clicked()), parent(), SLOT(onAreaCutBtnClick()));
 }
 
+void GraphMenuWidget::makeWindowTransformConnection()
+{
+    //TODO!
+//    connect(averageBtn, SIGNAL(clicked()), parent(), SLOT());
+//    connect(gaussBtn, SIGNAL(clicked()), parent(), SLOT());
+//    connect(medianBtn, SIGNAL(clicked()), parent(), SLOT());
+//    connect(laplassianBtn, SIGNAL(clicked()), parent(), SLOT());
+//    connect(gradientBtn, SIGNAL(clicked()), parent(), SLOT());
+}
+
 void GraphMenuWidget::createWindowTransBlock()
 {
     vertWindowTransfItems = new QVBoxLayout();
@@ -93,6 +98,7 @@ void GraphMenuWidget::createWindowTransBlock()
     medianBtn = new QPushButton("Median Filter (add impl)");
     laplassianBtn = new QPushButton("Laplassian (add impl)");
     gradientBtn = new QPushButton("Gradient (add impl)");
+    makeWindowTransformConnection();
 
     vertWindowTransfItems->addWidget(windowTransformLabel);
     vertWindowTransfItems->addWidget(averageBtn);

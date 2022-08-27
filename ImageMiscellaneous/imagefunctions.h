@@ -9,7 +9,7 @@
 #define IMAGEFUNCTIONS_H
 #include<QImage>
 #include<QDebug>
-#include "histogram.h"
+#include "MainWidgets/histogram.h"
 
 
 namespace ImageFunctions {
@@ -18,6 +18,7 @@ namespace ImageFunctions {
     void getRGB(uchar*& px, int& r, int& g, int& b);
     //QImage& fillRect(const QImage& img);
     void setPixColor(uchar*& pix, int r, int g, int b);
+    uchar* getPixByIndexes(uchar* const& px, const int row, const int column, const int width);
 
 }
 

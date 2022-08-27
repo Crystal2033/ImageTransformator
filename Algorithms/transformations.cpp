@@ -27,6 +27,7 @@ void SinglePixelTransforms::transform(const QImage &image, ImageWidget *&imgWidg
     }
 
     imgWidget->setImage(*transformedImage, transformedImage->size());
+    delete transformedImage;
 }
 
 

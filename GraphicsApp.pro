@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Algorithms/transformations.cpp \
+    Algorithms/windowtransform.cpp \
     Exceptions/exceptions.cpp \
     ImageMiscellaneous/imagefunctions.cpp \
     MainWidgets/histogram.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     Algorithms/transformations.h \
+    Algorithms/windowtransform.h \
     Exceptions/exceptions.h \
     ImageMiscellaneous/imagefunctions.h \
     MainWidgets/histogram.h \

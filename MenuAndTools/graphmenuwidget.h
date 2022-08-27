@@ -59,6 +59,7 @@ private:
     //PRIVATE functions
     void createGradationTransBlock();
     void makeGradationalConnection();
+    void makeWindowTransformConnection();
     void createWindowTransBlock();
     void createFourierTransBlock();
 

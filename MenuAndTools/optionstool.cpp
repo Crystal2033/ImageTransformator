@@ -103,8 +103,6 @@ void OptionsTool::createRangeSlider(const QPair<int, int> &range)
     connect(rangeSlider, SIGNAL(lowerValueChanged(int)), this, SLOT(onLeftAreaValueChanged(int)));
     connect(rangeSlider, SIGNAL(upperValueChanged(int)), this, SLOT(onRightAreaValueChanged(int)));
     connect(areaCheckBox, SIGNAL(stateChanged(int)), this, SLOT(onAreaCheckStatusClicked(int)));
-
-
 }
 
 void OptionsTool::createAcceptCancelBtns()

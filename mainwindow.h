@@ -38,6 +38,7 @@ private:
 
     //Images
     QImage image;
+    QSize startedImageSize;
     ImageWidget *startImageWgt = nullptr;
     Histogram* histStartImg = nullptr;
     Histogram* histResultImg = nullptr;

@@ -17,6 +17,8 @@ void ImageFunctions::setPixColor(uchar*& pix, int r, int g, int b)
 
 }
 
+
+
 //QImage& ImageFunctions::fillRect(const QImage& img)
 //{
 //    QImage* copy_image = new QImage(img.copy());
@@ -100,4 +102,10 @@ void ImageFunctions::getRGB(uchar *&px, int &r, int &g, int &b)
     g = *++px;
     b = *++px;
     px += 2;
+}
+
+uchar* ImageFunctions::getPixByIndexes(uchar * const &px, const int row, const int column, const int width)
+{
+    //uchar* needPx;
+    return px + (row*width + column)*4;
 }
