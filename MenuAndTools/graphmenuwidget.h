@@ -54,6 +54,9 @@ private:
 
     //Other
     QScrollArea* scrollArea = nullptr;
+    QVBoxLayout* vertOtherLay = nullptr;
+    QLabel* summImageslabel = nullptr;
+    QPushButton* summImagesBtn = nullptr;
 
 
     //PRIVATE functions
@@ -63,6 +66,7 @@ private:
     void makeWindowTransformConnection();
     void createWindowTransBlock();
     void createFourierTransBlock();
+    void createBlockWithOtherTransforms();
 
     //WINDOW TRANSFORMS
 

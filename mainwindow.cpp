@@ -448,4 +448,69 @@ void MainWindow::onGradientBtnClick()
     delete options;
 }
 
+void MainWindow::onSummImagesBtnClick()
+{
+    QFileDialog::Options options;
+    QString selectedFilter;
+    QString fileName = "";
+    if(!resultImageWgt){
+        QMessageBox::critical(this, "Image widget is empty", "Your image doesn`t exist.");
+        return;
+    }
+
+    QImage addingImage;
+    fileName = QFileDialog::getOpenFileName(this, "Export Plot", ".", "PNG Files (*.png, *.jpg);;All Files (*)",
+                                        &selectedFilter,
+                                        options);
+    if (!fileName.isEmpty())
+    {
+        if (!addingImage.load(fileName))
+        {
+            QString err_msg = QString("Can not download an image<br>Searching by path: %1").arg(fileName);
+            qDebug() << err_msg.split("<br>");
+            QMessageBox::critical(this
+                                  , "Error"
+                                  , err_msg);
+            exit(-1);
+        }
+
+        addingImage = addingImage
+                .scaled(image.width(), image.height()) // Qt::KeepAspectRatio
+                .convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        addingImage = ImageFunctions::setToBrightnessMap(addingImage);
+        QImage* resultImage = nullptr;
+
+        try {
+            resultImage = new QImage(*startImageWgt->getImage());
+
+        }  catch (ImageExistanceError& err) {
+            Q_UNUSED(err);
+        }
+
+        uchar* px = resultImage->bits();
+        uchar* addingPx = addingImage.bits();
+
+        const int pixelsQuo = resultImage->width() * resultImage->height();
+        int newBrightness = 0;
+        for(int i = 0; i < pixelsQuo; i++)
+        {
+            newBrightness = *px + *addingPx;
+            if(newBrightness > BRIGHTNESS_MAX - 1)
+            {
+                *px++ = *px++ = *px++ = BRIGHTNESS_MAX - 1;
+            }
+            else{
+                *px++ = *px++ = *px++ = newBrightness;
+            }
+
+            px++;
+            addingPx+=4;
+        }
+
+        resultImageWgt->setImage(*resultImage, resultImage->size());
+        delete resultImage;
+
+    }
+}
+
 

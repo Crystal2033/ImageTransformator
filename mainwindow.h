@@ -101,5 +101,7 @@ public slots:
     void onLaplassBtnClick();
     void onGradientBtnClick();
 
+    void onSummImagesBtnClick();
+
 };
 #endif // MAINWINDOW_H

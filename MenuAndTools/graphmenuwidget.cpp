@@ -24,6 +24,7 @@ void GraphMenuWidget::createMenu(QBoxLayout* parentLayout)
 
     createGradationTransBlock();
     createWindowTransBlock();
+    createBlockWithOtherTransforms();
     createFourierTransBlock();
 
     setLayout(vertMenuItems);
@@ -128,4 +129,18 @@ void GraphMenuWidget::createFourierTransBlock()
     vertFourierTransfItems->addWidget(fastFourierTransform);
 
     vertMenuItems->addLayout(vertFourierTransfItems);
+}
+
+void GraphMenuWidget::createBlockWithOtherTransforms()
+{
+    vertOtherLay = new QVBoxLayout();
+    summImageslabel = new QLabel("Other transforms");
+    summImagesBtn = new QPushButton("Summ images");
+
+    vertOtherLay->addWidget(summImageslabel);
+    vertOtherLay->addWidget(summImagesBtn);
+
+    vertMenuItems->addLayout(vertOtherLay);
+    connect(summImagesBtn, SIGNAL(clicked()), parent(), SLOT(onSummImagesBtnClick()));
+
 }

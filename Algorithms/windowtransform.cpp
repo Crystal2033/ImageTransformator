@@ -219,9 +219,9 @@ void WindowTransform::transform(const QImage &image, ImageWidget *&imageWidget, 
     }
 
     QImage* transformedImage = new QImage(image);
-    for(int i = 0; i < image.height(); ++i)
+    for(int i = 0; i < image.height(); i++)
     {
-        for(int j = 0; j < image.width(); ++j)
+        for(int j = 0; j < image.width(); j++)
         {
             createWindowTransfOnPix(image, *transformedImage, i, j);
         }
