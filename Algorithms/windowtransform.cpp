@@ -78,6 +78,16 @@ void WindowTransform::setMatrixOptions(const int constantNum, const int mode)
                 matrix = {{-1, 0, 1}, {-1, 0, 1}, {-1, 0, 1}};
                 break;
             }
+            case 6:
+            {
+                matrix = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
+                break;
+            }
+            case 7:
+            {
+                matrix = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
+                break;
+            }
             default:
             {
                 qDebug() << "laplassError" << Qt::endl;
@@ -209,8 +219,6 @@ double WindowTransform::gauss(const int gamma, const int x, const int y)
 {
     return double (1/(2*M_PI * qPow(gamma, 2)) * qExp((-qPow(x, 2) - qPow(y, 2))/(2*qPow(gamma, 2))));
 }
-
-
 
 void WindowTransform::transform(const QImage &image, ImageWidget *&imageWidget, const TransformOptions* options)
 {

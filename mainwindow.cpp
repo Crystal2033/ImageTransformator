@@ -398,7 +398,7 @@ void MainWindow::onLaplassBtnClick()
         delete diffTool;
     }
     diffTool = new DiffTool;
-    diffTool->createTool(6);
+    diffTool->createTool(8);
 
     if(windowTransformator)
     {
