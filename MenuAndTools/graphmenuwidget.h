@@ -57,11 +57,14 @@ private:
 
 
     //PRIVATE functions
+    //SINGLE PIXEL TRANSFORMS
     void createGradationTransBlock();
     void makeGradationalConnection();
     void makeWindowTransformConnection();
     void createWindowTransBlock();
     void createFourierTransBlock();
+
+    //WINDOW TRANSFORMS
 
 
 };

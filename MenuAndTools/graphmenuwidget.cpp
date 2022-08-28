@@ -74,12 +74,11 @@ void GraphMenuWidget::makeGradationalConnection()
 
 void GraphMenuWidget::makeWindowTransformConnection()
 {
-    //TODO!
-//    connect(averageBtn, SIGNAL(clicked()), parent(), SLOT());
-//    connect(gaussBtn, SIGNAL(clicked()), parent(), SLOT());
-//    connect(medianBtn, SIGNAL(clicked()), parent(), SLOT());
-//    connect(laplassianBtn, SIGNAL(clicked()), parent(), SLOT());
-//    connect(gradientBtn, SIGNAL(clicked()), parent(), SLOT());
+    connect(averageBtn, SIGNAL(clicked()), parent(), SLOT(onAverageBtnClick()));
+    connect(gaussBtn, SIGNAL(clicked()), parent(), SLOT(onGaussBtnClick()));
+    connect(medianBtn, SIGNAL(clicked()), parent(), SLOT(onMedianFilterBtnClick()));
+    connect(laplassianBtn, SIGNAL(clicked()), parent(), SLOT(onLaplassBtnClick()));
+    connect(gradientBtn, SIGNAL(clicked()), parent(), SLOT(onGradientBtnClick()));
 }
 
 void GraphMenuWidget::createWindowTransBlock()
@@ -93,11 +92,11 @@ void GraphMenuWidget::createWindowTransBlock()
     windowTransformLabel->setWordWrap(true);
     windowTransformLabel->setText(QString("Window transformation"));
 
-    averageBtn = new QPushButton("Average Transform (add impl)");
-    gaussBtn = new QPushButton("Gauss Transform (add impl)");
-    medianBtn = new QPushButton("Median Filter (add impl)");
-    laplassianBtn = new QPushButton("Laplassian (add impl)");
-    gradientBtn = new QPushButton("Gradient (add impl)");
+    averageBtn = new QPushButton("Average Transform");
+    gaussBtn = new QPushButton("Gauss Transform");
+    medianBtn = new QPushButton("Median Filter");
+    laplassianBtn = new QPushButton("Laplassian");
+    gradientBtn = new QPushButton("Gradient");
     makeWindowTransformConnection();
 
     vertWindowTransfItems->addWidget(windowTransformLabel);

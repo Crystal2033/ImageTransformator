@@ -15,6 +15,7 @@ SOURCES += \
     ImageMiscellaneous/imagefunctions.cpp \
     MainWidgets/histogram.cpp \
     MainWidgets/imagewidget.cpp \
+    MenuAndTools/diffTool.cpp \
     MenuAndTools/graphmenuwidget.cpp \
     MenuAndTools/optionstool.cpp \
     MenuAndTools/rangeslider.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     MainWidgets/imagewidget.h \
     MainWidgets/observer.h \
     MainWidgets/subject.h \
+    MenuAndTools/diffTool.h \
     MenuAndTools/graphmenuwidget.h \
     MenuAndTools/optionstool.h \
     MenuAndTools/rangeslider.h \

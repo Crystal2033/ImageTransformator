@@ -45,7 +45,7 @@ private:
 
 
     TransformOptions* options = nullptr;
-    SinglePixelTransforms* transformator = nullptr;
+    SinglePixelTransforms* singleTransformator = nullptr;
     ImageWidget* imageWidget = nullptr;
     QImage* image = nullptr;
 
@@ -54,6 +54,7 @@ private:
     QLCDNumber* rightNumSliderGadget = nullptr;
     RangeSlider* rangeSlider = nullptr;
     QCheckBox* areaCheckBox = nullptr;
+
 
 public:
     explicit OptionsTool(QWidget *parent = nullptr);
@@ -137,5 +138,57 @@ public:
     void createRangeSlider() override;
     OptionsTool*& createTool() override;
 };
+
+class AverageWindowFilterBuilder : public ToolBuilder
+{
+public:
+    AverageWindowFilterBuilder(QWidget* parent = nullptr);
+    void createFirstSlider() override;
+    void createSecondSlider() override {};
+    void createRangeSlider() override {};
+    OptionsTool*& createTool() override;
+};
+
+class GaussWindowFilterBuilder : public ToolBuilder
+{
+public:
+    GaussWindowFilterBuilder(QWidget* parent = nullptr);
+    void createFirstSlider() override;
+    void createSecondSlider() override {};
+    void createRangeSlider() override {};
+    OptionsTool*& createTool() override;
+};
+
+class MedianWindowFilterBuilder : public ToolBuilder
+{
+public:
+    MedianWindowFilterBuilder(QWidget* parent = nullptr);
+    void createFirstSlider() override;
+    void createSecondSlider() override {};
+    void createRangeSlider() override {};
+    OptionsTool*& createTool() override;
+};
+
+class LaplassWindowFilterBuilder : public ToolBuilder
+{
+public:
+    LaplassWindowFilterBuilder(QWidget* parent = nullptr);
+    void createFirstSlider() override {};
+    void createSecondSlider() override {};
+    void createRangeSlider() override {};
+    OptionsTool*& createTool() override;
+};
+
+class GradientWindowFilterBuilder : public ToolBuilder
+{
+public:
+    GradientWindowFilterBuilder(QWidget* parent = nullptr);
+    void createFirstSlider() override {};
+    void createSecondSlider() override {};
+    void createRangeSlider() override {};
+    OptionsTool*& createTool() override;
+};
+
+
 
 #endif // OPTIONSTOOL_H

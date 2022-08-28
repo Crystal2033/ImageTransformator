@@ -19,6 +19,7 @@
 #include "MainWidgets/histogram.h"
 #include "Exceptions/exceptions.h"
 #include <QtMath>
+#include <QThread>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -304,13 +305,147 @@ void MainWindow::onAreaCutBtnClick()
 
     transformStrategy = new AreaCutting;
     try {
-
         tool->setTransformImageData(startImageWgt->getImage(), resultImageWgt, transformStrategy);
         tool->exec();
     }  catch (ImageExistanceError& err) {
         Q_UNUSED(err);
     }
     delete builder;
+}
+
+
+void MainWindow::onAverageBtnClick()
+{
+    ToolBuilder* builder = new AverageWindowFilterBuilder(this);
+    if(tool){
+        delete tool;
+    }
+    tool = builder->createTool();
+
+    if(windowTransformator)
+    {
+        delete windowTransformator;
+    }
+    windowTransformator = new WindowTransform(AVERAGE);
+
+    try {
+        if(tool->exec() == QDialog::Accepted)
+        {
+            windowTransformator->transform(*startImageWgt->getImage(), resultImageWgt, &tool->getOptions());
+        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete builder;
+
+
+}
+
+void MainWindow::onGaussBtnClick()
+{
+    ToolBuilder* builder = new GaussWindowFilterBuilder(this);
+    if(tool){
+        delete tool;
+    }
+    tool = builder->createTool();
+
+    if(windowTransformator)
+    {
+        delete windowTransformator;
+    }
+    windowTransformator = new WindowTransform(GAUSS);
+
+    try {
+        if(tool->exec() == QDialog::Accepted)
+        {
+            windowTransformator->transform(*startImageWgt->getImage(), resultImageWgt, &tool->getOptions());
+        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete builder;
+}
+
+void MainWindow::onMedianFilterBtnClick()
+{
+    ToolBuilder* builder = new MedianWindowFilterBuilder(this);
+    if(tool){
+        delete tool;
+    }
+    tool = builder->createTool();
+
+    if(windowTransformator)
+    {
+        delete windowTransformator;
+    }
+    windowTransformator = new WindowTransform(MEDIAN);
+
+    try {
+        if(tool->exec() == QDialog::Accepted)
+        {
+            windowTransformator->transform(*startImageWgt->getImage(), resultImageWgt, &tool->getOptions());
+        }
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete builder;
+}
+
+void MainWindow::onLaplassBtnClick()
+{
+    //ToolBuilder* builder = new LaplassWindowFilterBuilder(this);
+    if(diffTool){
+        delete diffTool;
+    }
+    diffTool = new DiffTool;
+    diffTool->createTool(6);
+
+    if(windowTransformator)
+    {
+        delete windowTransformator;
+    }
+    windowTransformator = new WindowTransform(LAPLASS);
+    TransformOptions* options = new TransformOptions();
+    try {
+        if(diffTool->exec() == QDialog::Accepted)
+        {
+            options->setConstant(3);
+            options->setWindowTransformMode(diffTool->getCheckedNumber());
+            windowTransformator->transform(*startImageWgt->getImage(), resultImageWgt, options);
+        }
+
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete options;
+}
+
+void MainWindow::onGradientBtnClick()
+{
+    if(diffTool){
+        delete diffTool;
+    }
+    diffTool = new DiffTool(this);
+    diffTool->createTool(2);
+
+    if(windowTransformator)
+    {
+        delete windowTransformator;
+    }
+    windowTransformator = new WindowTransform(GRADIENT);
+    TransformOptions* options = new TransformOptions();
+    try {
+        if(diffTool->exec() == QDialog::Accepted)
+        {
+            options->setConstant(3);
+            options->setWindowTransformMode(diffTool->getCheckedNumber());
+            windowTransformator->transform(*startImageWgt->getImage(), resultImageWgt, options);
+        }
+
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+    delete options;
 }
 
 

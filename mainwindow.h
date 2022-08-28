@@ -20,6 +20,8 @@
 #include "MenuAndTools/graphmenuwidget.h"
 #include "MainWidgets/imagewidget.h"
 #include "MenuAndTools/optionstool.h"
+#include "Algorithms/windowtransform.h"
+#include "MenuAndTools/diffTool.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -60,9 +62,16 @@ private:
     //Menu
     GraphMenuWidget* graphMenuWidget = nullptr;
 
-    //Transformators
+    //Transformators SINGLE
     SinglePixelTransforms* transformStrategy = nullptr;
     OptionsTool* tool = nullptr;
+
+    //Transformators WINDOW
+    DiffTool* diffTool = nullptr;
+    WindowTransform* windowTransformator = nullptr;
+
+
+
 
     //Functions
     void addSaveAndSwapBtns(QVBoxLayout*& parentLayout);
@@ -85,6 +94,12 @@ public slots:
     void onLogarythmBtnClick();
     void onGammaCorrectionBtnClick();
     void onAreaCutBtnClick();
+
+    void onAverageBtnClick();
+    void onGaussBtnClick();
+    void onMedianFilterBtnClick();
+    void onLaplassBtnClick();
+    void onGradientBtnClick();
 
 };
 #endif // MAINWINDOW_H

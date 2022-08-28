@@ -16,6 +16,8 @@ private:
     int gammaConstant = 0;
     QPair<int, int> rangeArea;
     bool areaContrastChecker = false;
+    int windowMatrixDimension = 3;
+    int windowTransformMode = 1;
 
 public:
     TransformOptions();
@@ -25,6 +27,8 @@ public:
     bool isAreaContrastChecked() const;
     int getLeftAreaRange() const;
     int getRightAreaRange() const;
+    int getMatrixDimension() const;
+    int getWindowTransformMode() const;
 
     //SETTERS
     void setAreaCheckStatus(const bool status);
@@ -33,6 +37,8 @@ public:
     void setGammaConst(const int gamma);
     void setLeftAreaRange(const int val);
     void setRightAreaRange(const int val);
+    void setMatrixDimension(const int val);
+    void setWindowTransformMode(const int val);
 
 };
 

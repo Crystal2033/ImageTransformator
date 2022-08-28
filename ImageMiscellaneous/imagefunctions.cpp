@@ -106,6 +106,5 @@ void ImageFunctions::getRGB(uchar *&px, int &r, int &g, int &b)
 
 uchar* ImageFunctions::getPixByIndexes(uchar * const &px, const int row, const int column, const int width)
 {
-    //uchar* needPx;
     return px + (row*width + column)*4;
 }

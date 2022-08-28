@@ -37,6 +37,16 @@ int TransformOptions::getRightAreaRange() const
     return rangeArea.second;
 }
 
+int TransformOptions::getMatrixDimension() const
+{
+    return windowMatrixDimension;
+}
+
+int TransformOptions::getWindowTransformMode() const
+{
+    return windowTransformMode;
+}
+
 void TransformOptions::setAreaCheckStatus(const bool status)
 {
     areaContrastChecker = status;
@@ -66,4 +76,14 @@ void TransformOptions::setLeftAreaRange(const int val)
 void TransformOptions::setRightAreaRange(const int val)
 {
     rangeArea.second = val;
+}
+
+void TransformOptions::setMatrixDimension(const int val)
+{
+    windowMatrixDimension = val;
+}
+
+void TransformOptions::setWindowTransformMode(const int val)
+{
+    windowTransformMode = val;
 }

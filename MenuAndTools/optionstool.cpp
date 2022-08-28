@@ -28,7 +28,7 @@ TransformOptions &OptionsTool::getOptions()
 
 void OptionsTool::setTransformImageData(QImage *&image, ImageWidget *&imageWidget, SinglePixelTransforms* const& transformator)
 {
-    this->transformator = transformator;
+    this->singleTransformator = transformator;
     this->image = image;
     this->imageWidget = imageWidget;
 }
@@ -44,6 +44,7 @@ void OptionsTool::createFirstSlider(const QPair<int, int> &range, const QString&
     constantSlider->setRange(range.first, range.second);
     constantSlider->setTickPosition(QSlider::TicksBelow);
     constantSlider->setValue(startValue);
+    options->setConstant(range.first);
 
     horConstantDataLay->addWidget(constantLabel);
     horConstantDataLay->addWidget(digitalGadget, Qt::AlignCenter);
@@ -66,6 +67,7 @@ void OptionsTool::createSecondSlider(const QPair<int, int> &range, const QString
     gammaSlider->setRange(range.first, range.second);
     gammaSlider->setTickPosition(QSlider::TicksBelow);
     gammaSlider->setValue(startValue);
+    options->setGammaConst(range.first);
 
     horGammaConstantLay->addWidget(gammaLabel);
     horGammaConstantLay->addWidget(digitalGadget2, Qt::AlignCenter);
@@ -119,38 +121,49 @@ void OptionsTool::createAcceptCancelBtns()
     connect(cancelBtn, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
+
 void OptionsTool::onConstantValueChanged(int val)
 {
     options->setConstant(val);
     digitalGadget->display(val);
-    transformator->transform(*image, imageWidget, options);
+    if(singleTransformator){
+        singleTransformator->transform(*image, imageWidget, options);
+    }
 }
 
 void OptionsTool::onGammaValueChanged(int val)
 {
     options->setGammaConst(val);
     digitalGadget2->display(val);
-    transformator->transform(*image, imageWidget, options);
+    if(singleTransformator){
+        singleTransformator->transform(*image, imageWidget, options);
+    }
 }
 
 void OptionsTool::onLeftAreaValueChanged(int val)
 {
     options->setLeftAreaRange(val);
     leftNumSliderGadget->display(val);
-    transformator->transform(*image, imageWidget, options);
+    if(singleTransformator){
+        singleTransformator->transform(*image, imageWidget, options);
+    }
 }
 
 void OptionsTool::onRightAreaValueChanged(int val)
 {
     options->setRightAreaRange(val);
     rightNumSliderGadget->display(val);
-    transformator->transform(*image, imageWidget, options);
+    if(singleTransformator){
+        singleTransformator->transform(*image, imageWidget, options);
+    }
 }
 
 void OptionsTool::onAreaCheckStatusClicked(int val)
 {
     options->setAreaCheckStatus(val);
-    transformator->transform(*image, imageWidget, options);
+    if(singleTransformator){
+        singleTransformator->transform(*image, imageWidget, options);
+    }
 }
 
 
@@ -235,6 +248,78 @@ void AreaCuttingBuilder::createRangeSlider()
 OptionsTool *&AreaCuttingBuilder::createTool()
 {
     createRangeSlider();
+    createAcceptCancelBtns();
+    return tool;
+}
+
+AverageWindowFilterBuilder::AverageWindowFilterBuilder(QWidget *parent)
+{
+    reset(parent);
+}
+
+void AverageWindowFilterBuilder::createFirstSlider()
+{
+    tool->createFirstSlider(QPair<int, int>(3, 10), "Matrix dimension");
+}
+
+OptionsTool *&AverageWindowFilterBuilder::createTool()
+{
+    createFirstSlider();
+    createAcceptCancelBtns();
+    return tool;
+}
+
+GaussWindowFilterBuilder::GaussWindowFilterBuilder(QWidget *parent)
+{
+    reset(parent);
+}
+
+
+void GaussWindowFilterBuilder::createFirstSlider()
+{
+    tool->createFirstSlider(QPair<int, int>(1, 3), "Gamma value");
+}
+
+OptionsTool *&GaussWindowFilterBuilder::createTool()
+{
+    createFirstSlider();
+    createAcceptCancelBtns();
+    return tool;
+}
+
+LaplassWindowFilterBuilder::LaplassWindowFilterBuilder(QWidget *parent)
+{
+    reset(parent);
+}
+
+OptionsTool *&LaplassWindowFilterBuilder::createTool()
+{
+    return tool;
+}
+
+OptionsTool *&GradientWindowFilterBuilder::createTool()
+{
+    return tool;
+}
+
+GradientWindowFilterBuilder::GradientWindowFilterBuilder(QWidget *parent)
+{
+    reset(parent);
+}
+
+MedianWindowFilterBuilder::MedianWindowFilterBuilder(QWidget *parent)
+{
+    reset(parent);
+}
+
+void MedianWindowFilterBuilder::createFirstSlider()
+{
+    tool->createFirstSlider(QPair<int, int>(3, 10), "Matrix dimension");
+}
+
+OptionsTool *&MedianWindowFilterBuilder::createTool()
+{
+    createFirstSlider();
     createAcceptCancelBtns();
     return tool;
 }
