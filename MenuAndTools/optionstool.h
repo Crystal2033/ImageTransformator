@@ -19,7 +19,7 @@
 #include "transformoptions.h"
 #include "MainWidgets/imagewidget.h"
 #include <QImage>
-#include "Algorithms/transformations.h"
+#include "Algorithms/singlepixTransforms.h"
 #include <QPair>
 #include "rangeslider.h"
 #include <QCheckBox>

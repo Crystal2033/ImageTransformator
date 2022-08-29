@@ -9,7 +9,8 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Algorithms/transformations.cpp \
+    Algorithms/fouriertransform.cpp \
+    Algorithms/singlepixTransforms.cpp \
     Algorithms/windowtransform.cpp \
     Exceptions/exceptions.cpp \
     ImageMiscellaneous/imagefunctions.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
     mainwindow.cpp \
 
 HEADERS += \
-    Algorithms/transformations.h \
+    Algorithms/fouriertransform.h \
+    Algorithms/singlepixTransforms.h \
     Algorithms/windowtransform.h \
     Exceptions/exceptions.h \
     ImageMiscellaneous/imagefunctions.h \

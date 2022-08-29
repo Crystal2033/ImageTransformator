@@ -25,7 +25,7 @@ void GraphMenuWidget::createMenu(QBoxLayout* parentLayout)
     createGradationTransBlock();
     createWindowTransBlock();
     createBlockWithOtherTransforms();
-    createFourierTransBlock();
+    //createFourierTransBlock();
 
     setLayout(vertMenuItems);
     scrollArea->setWidgetResizable(true);
@@ -82,6 +82,11 @@ void GraphMenuWidget::makeWindowTransformConnection()
     connect(gradientBtn, SIGNAL(clicked()), parent(), SLOT(onGradientBtnClick()));
 }
 
+void GraphMenuWidget::makeFourierTransformConnection()
+{
+    connect(simpleFourierTransform, SIGNAL(clicked()), parent(), SLOT(onFourierTransformBtnClick()));
+}
+
 void GraphMenuWidget::createWindowTransBlock()
 {
     vertWindowTransfItems = new QVBoxLayout();
@@ -121,12 +126,13 @@ void GraphMenuWidget::createFourierTransBlock()
     fourierTransformLabel->setWordWrap(true);
     fourierTransformLabel->setText(QString("Fourier transformations"));
 
-    simpleFourierTransform = new QPushButton("Simple Fourier Transform (add impl)");
-    fastFourierTransform = new QPushButton("Fast Fourier Transform (add impl)");
+    simpleFourierTransform = new QPushButton("Simple Fourier Transform");
+    //fastFourierTransform = new QPushButton("Fast Fourier Transform (add impl)");
+    makeFourierTransformConnection();
 
     vertFourierTransfItems->addWidget(fourierTransformLabel);
     vertFourierTransfItems->addWidget(simpleFourierTransform);
-    vertFourierTransfItems->addWidget(fastFourierTransform);
+    //vertFourierTransfItems->addWidget(fastFourierTransform);
 
     vertMenuItems->addLayout(vertFourierTransfItems);
 }
@@ -135,6 +141,8 @@ void GraphMenuWidget::createBlockWithOtherTransforms()
 {
     vertOtherLay = new QVBoxLayout();
     summImageslabel = new QLabel("Other transforms");
+    summImageslabel->setAlignment(Qt::AlignCenter);
+    summImageslabel->setWordWrap(true);
     summImagesBtn = new QPushButton("Summ images");
 
     vertOtherLay->addWidget(summImageslabel);

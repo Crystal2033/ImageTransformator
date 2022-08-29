@@ -64,6 +64,7 @@ private:
     void createGradationTransBlock();
     void makeGradationalConnection();
     void makeWindowTransformConnection();
+    void makeFourierTransformConnection();
     void createWindowTransBlock();
     void createFourierTransBlock();
     void createBlockWithOtherTransforms();

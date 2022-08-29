@@ -5,7 +5,7 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#include "Algorithms/transformations.h"
+#include "Algorithms/singlepixTransforms.h"
 
 unsigned int SinglePixelTransforms::transformationHook(uchar *&px, TransformOptions * const &options) const
 {

@@ -513,4 +513,21 @@ void MainWindow::onSummImagesBtnClick()
     }
 }
 
+void MainWindow::onFourierTransformBtnClick()
+{
+    if(fourierTransformator)
+    {
+        delete fourierTransformator;
+    }
+    fourierTransformator = new FourierTransform;
+    try {
+        qDebug() << "StartTransform" << Qt::endl;
+        fourierTransformator->transform(*startImageWgt->getImage(), resultImageWgt);
+        qDebug() << "EndTransform" << Qt::endl;
+
+    }  catch (ImageExistanceError& err) {
+        Q_UNUSED(err);
+    }
+}
+
 

@@ -5,8 +5,8 @@
  *   https://github.com/Crystal2033                                        *
  *                                                                         *
  ***************************************************************************/
-#ifndef TRANSFORMATIONS_H
-#define TRANSFORMATIONS_H
+#ifndef SINGLEPIXTRANSFORMS_H
+#define SINGLEPIXTRANSFORMS_H
 
 #include "MainWidgets/imagewidget.h"
 #include <QObject>
@@ -70,4 +70,4 @@ public:
      //void transform(const QImage &image, ImageWidget *& imgWidget, TransformOptions* const& options = nullptr) const override ;
 };
 
-#endif // TRANSFORMATIONS_H
+#endif // SINGLEPIXTRANSFORMS_H

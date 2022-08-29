@@ -16,12 +16,13 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QPushButton>
-#include "Algorithms/transformations.h"
+#include "Algorithms/singlepixTransforms.h"
 #include "MenuAndTools/graphmenuwidget.h"
 #include "MainWidgets/imagewidget.h"
 #include "MenuAndTools/optionstool.h"
 #include "Algorithms/windowtransform.h"
 #include "MenuAndTools/diffTool.h"
+#include "Algorithms/fouriertransform.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -70,6 +71,9 @@ private:
     DiffTool* diffTool = nullptr;
     WindowTransform* windowTransformator = nullptr;
 
+    //FourierTransform
+    FourierTransform* fourierTransformator = nullptr;
+
 
 
 
@@ -102,6 +106,8 @@ public slots:
     void onGradientBtnClick();
 
     void onSummImagesBtnClick();
+
+    void onFourierTransformBtnClick();
 
 };
 #endif // MAINWINDOW_H
