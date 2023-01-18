@@ -31,10 +31,8 @@
 
 ![gradient](https://user-images.githubusercontent.com/90513443/213252847-ba5eae62-eab9-426c-a09e-ce81e6172463.PNG)
 
-<H2>Laplassian</H2>
+<H2>Summ laplass transform and normal photo</H2>
 
 ![Laplassian](https://user-images.githubusercontent.com/90513443/213256616-eb582ec1-44af-43c2-b94b-418e248ae922.PNG)
-
-<H2>Summ laplass and normal photo</H2>
 
 
