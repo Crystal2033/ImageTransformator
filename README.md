@@ -13,7 +13,7 @@
 
 <H2>Average filter transformation</H2>
 
-![averageFilter](https://user-images.githubusercontent.com/90513443/213252832-56445e4d-e1d7-467a-b6c4-bce973681d14.PNG)
+![averageFilter](https://user-images.githubusercontent.com/90513443/213256608-08f60930-63a5-469e-ab90-6f8003a289ee.PNG)
 
 <H2>Gauss filter</H2>
 
@@ -21,21 +21,20 @@
 
 <H2>Median filter</H2>
 
-![median](https://user-images.githubusercontent.com/90513443/213252852-6d47b2a2-35f3-4b71-8aeb-4269e2dad2a2.PNG)
-
+![median](https://user-images.githubusercontent.com/90513443/213256618-dc484517-9bb3-4167-a6a0-ea1f429bf9a8.PNG)
 
 <H2>Gamma correction</H2>
 
 ![gamma](https://user-images.githubusercontent.com/90513443/213252842-ac848d30-2044-474d-822d-40ebf2e77a4d.PNG)
-
 
 <H2>Gradient</H2>
 
 ![gradient](https://user-images.githubusercontent.com/90513443/213252847-ba5eae62-eab9-426c-a09e-ce81e6172463.PNG)
 
 <H2>Laplassian</H2>
-![Laplassian](https://user-images.githubusercontent.com/90513443/213252851-0c79b002-8e69-4745-ba7a-5b87a4ab1dcc.PNG)
 
+![Laplassian](https://user-images.githubusercontent.com/90513443/213256616-eb582ec1-44af-43c2-b94b-418e248ae922.PNG)
 
+<H2>Summ laplass and normal photo</H2>
 
 
